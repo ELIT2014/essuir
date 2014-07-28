@@ -40,7 +40,7 @@ public class Curator
     public static final int CURATE_NOTASK = -3;
     /** no assigned status code - typically because task not yet performed */
     public static final int CURATE_UNSET = -2;
-    /** task encountered an error in processing */
+    /** task encountered a error in processing */
     public static final int CURATE_ERROR = -1;
     /** task completed successfully */
     public static final int CURATE_SUCCESS = 0;

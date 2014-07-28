@@ -22,7 +22,6 @@ import org.dspace.content.Collection;
 import org.dspace.content.Item;
 import org.dspace.core.Constants;
 
-import org.dspace.app.util.CollectionDropDown;
 
 /**
  * This page displays collections to which the user can move an item.
@@ -90,7 +89,7 @@ public class MoveItemForm extends AbstractDSpaceTransformer {
             // Only add the item if it isn't already the owner
             if (!item.isOwningCollection(collection))
             {
-                select.addOption(collection.equals(owningCollection), collection.getID(), CollectionDropDown.collectionPath(collection));
+                select.addOption(collection.equals(owningCollection), collection.getID(), name);
             }
         }
         

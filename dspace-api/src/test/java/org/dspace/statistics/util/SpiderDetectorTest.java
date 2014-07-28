@@ -8,13 +8,16 @@
 package org.dspace.statistics.util;
 
 import mockit.Mock;
-import mockit.MockUp;
+import mockit.MockClass;
+import mockit.Mockit;
 import org.dspace.statistics.SolrLogger;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author mwood
@@ -26,7 +29,13 @@ public class SpiderDetectorTest
     @BeforeClass
     static public void beforeClass()
     {
-        new MockSolrLogger();
+        Mockit.setUpMocks(MockSolrLogger.class); // Don't test SolrLogger here
+    }
+    @AfterClass
+
+    static public void afterClass()
+    {
+        Mockit.tearDownMocks(SolrLogger.class);
     }
 
     /**
@@ -143,8 +152,8 @@ public class SpiderDetectorTest
      * Dummy SolrLogger for testing.
      * @author mwood
      */
+    @MockClass (realClass = org.dspace.statistics.SolrLogger.class)
     static public class MockSolrLogger
-            extends MockUp<SolrLogger>
     {
         @Mock
         public void $init() {}

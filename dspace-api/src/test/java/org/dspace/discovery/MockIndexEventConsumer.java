@@ -8,7 +8,7 @@
 package org.dspace.discovery;
 
 import mockit.Mock;
-import mockit.MockUp;
+import mockit.MockClass;
 import org.dspace.core.Context;
 import org.dspace.event.Event;
 
@@ -18,9 +18,8 @@ import org.dspace.event.Event;
  *
  * @author tdonohue
  */
-public class MockIndexEventConsumer
-        extends MockUp<IndexEventConsumer>
-{
+@MockClass(realClass=IndexEventConsumer.class)
+public class MockIndexEventConsumer {
    
     //public void initialize() throws Exception {
         //do nothing

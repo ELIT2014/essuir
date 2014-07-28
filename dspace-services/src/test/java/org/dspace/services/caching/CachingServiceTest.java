@@ -156,11 +156,9 @@ public class CachingServiceTest extends DSpaceAbstractKernelTest {
         assertNotNull(memCache);
         assertTrue(caches.contains(memCache));
 
-        // This should create a new cache (as cache name is unique)
-        Cache c1 = cachingService.getCache("org.dspace.timtest.newcache", null);
+        Cache c1 = cachingService.getCache("org.dspace.aztest.new", null);
         assertNotNull(c1);
 
-        // Test that new cache was created and total caches increases by one 
         caches = cachingService.getCaches();
         assertNotNull(caches);
         assertEquals(curSize+1, caches.size());

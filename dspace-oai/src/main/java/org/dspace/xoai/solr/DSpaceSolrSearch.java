@@ -24,11 +24,12 @@ import org.dspace.xoai.solr.exceptions.SolrSearchEmptyException;
  */
 public class DSpaceSolrSearch
 {
-    public static SolrDocumentList query(SolrServer server, SolrQuery solrParams)
+    public static SolrDocumentList query(SolrQuery solrParams)
             throws DSpaceSolrException
     {
         try
         {
+            SolrServer server = DSpaceSolrServer.getServer();
             solrParams.addSortField("item.id", ORDER.asc);
             QueryResponse response = server.query(solrParams);
             return response.getResults();
@@ -39,11 +40,12 @@ public class DSpaceSolrSearch
         }
     }
 
-    public static SolrDocument querySingle(SolrServer server, SolrQuery solrParams)
+    public static SolrDocument querySingle(SolrQuery solrParams)
             throws SolrSearchEmptyException
     {
         try
         {
+            SolrServer server = DSpaceSolrServer.getServer();
             solrParams.addSortField("item.id", ORDER.asc);
             QueryResponse response = server.query(solrParams);
             if (response.getResults().getNumFound() > 0)

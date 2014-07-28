@@ -1153,7 +1153,7 @@ public class AuthorizeManager
             boolean isAnonymousInPlace = false;
             for (Group g : authorizedGroups)
             {
-                if (g.getID() == Group.ANONYMOUS_ID)
+                if (g.getID() == 0)
                 {
                     isAnonymousInPlace = true;
                 }

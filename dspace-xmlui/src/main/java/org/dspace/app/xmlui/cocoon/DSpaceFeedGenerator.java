@@ -299,7 +299,7 @@ public class DSpaceFeedGenerator extends AbstractGenerator
                 checkAccess:
                     for (Group group : AuthorizeManager.getAuthorizedGroups(context, item, Constants.READ))
                     {
-                        if ((group.getID() == Group.ANONYMOUS_ID))
+                        if ((group.getID() == 0))
                         {
                             result.add(item);
                             break checkAccess;

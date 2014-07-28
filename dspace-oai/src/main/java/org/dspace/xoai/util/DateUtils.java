@@ -14,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * 
@@ -24,19 +25,21 @@ public class DateUtils
 
     private static Logger log = LogManager.getLogger(DateUtils.class);
 
-    public static String format(Date date)
+    public static String formatToSolr(Date date)
     {
-        return format(date, true);
+        return formatToSolr(date, true);
     }
-    public static String format(Date date, boolean init)
+    public static String formatToSolr(Date date, boolean init)
     {
+        // 2008-01-01T00:00:00Z
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.'000Z'");
     	if (!init) sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.'999Z'");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         String ret = sdf.format(date);
         return ret;
     }
 
-    public static Date parse(String date)
+    public static Date parseDate(String date)
     {
         // 2008-01-01T00:00:00Z
         SimpleDateFormat format = new SimpleDateFormat(
@@ -92,7 +95,10 @@ public class DateUtils
 
     public static Date parseFromSolrDate(String date)
     {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+        // 2008-01-01T00:00:00Z
+        SimpleDateFormat format = new SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+        // format.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date ret;
         try
         {
@@ -104,5 +110,11 @@ public class DateUtils
             log.error(e.getMessage(), e);
         }
         return new Date();
+    }
+    
+    public static Date toSolrDate (Date date) throws ParseException {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        Date indexFormatExpiryDate = sdf.parse(sdf.format(date));
+        return indexFormatExpiryDate;
     }
 }

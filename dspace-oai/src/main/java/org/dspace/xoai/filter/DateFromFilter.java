@@ -7,51 +7,46 @@
  */
 package org.dspace.xoai.filter;
 
-import com.lyncode.builder.DateBuilder;
-import com.lyncode.xoai.dataprovider.services.api.DateProvider;
-import com.lyncode.xoai.dataprovider.services.impl.BaseDateProvider;
+import java.util.Date;
+
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.dspace.core.Context;
 import org.dspace.xoai.data.DSpaceItem;
-import org.dspace.xoai.filter.results.DatabaseFilterResult;
-import org.dspace.xoai.filter.results.SolrFilterResult;
-
-import java.util.Date;
+import org.dspace.xoai.util.DateUtils;
 
 /**
  * 
  * @author Lyncode Development Team <dspace@lyncode.com>
  */
-public class DateFromFilter extends DSpaceFilter {
-    private static DateProvider dateProvider = new BaseDateProvider();
-    private Date date;
+public class DateFromFilter extends DSpaceFilter
+{
+    private Date _date;
 
     public DateFromFilter(Date date)
     {
-        this.date = new DateBuilder(date).setMinMilliseconds().build();
+        _date = date;
     }
 
     @Override
-    public DatabaseFilterResult buildDatabaseQuery(Context context)
+    public DatabaseFilterResult getWhere(Context context)
     {
         return new DatabaseFilterResult("i.last_modified >= ?",
-                new java.sql.Date(date.getTime()));
+                new java.sql.Date(_date.getTime()));
     }
 
     @Override
     public boolean isShown(DSpaceItem item)
     {
-        if (item.getDatestamp().compareTo(date) >= 0)
+        if (item.getDatestamp().compareTo(_date) >= 0)
             return true;
         return false;
     }
 
     @Override
-    public SolrFilterResult buildSolrQuery()
+    public SolrFilterResult getQuery()
     {
-        String format = dateProvider.format(date).replace("Z", ".000Z"); // Tweak to set the milliseconds
         return new SolrFilterResult("item.lastmodified:["
-                + ClientUtils.escapeQueryChars(format)
+                + ClientUtils.escapeQueryChars(DateUtils.formatToSolr(_date))
                 + " TO *]");
     }
 
