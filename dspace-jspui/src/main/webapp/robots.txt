@@ -1,5 +1,18 @@
 User-agent: *
-
-# Uncomment the following line ONLY if sitemaps.org or HTML sitemaps are used
-# and you have verified that your site is being indexed correctly.
-# Disallow: /browse
+Disallow: /login
+Disallow: /register
+Disallow: /forgot
+Disallow: /advanced-search
+Disallow: /simple-search
+Disallow: /browse
+Disallow: /subscribe
+Disallow: /mydspace
+Disallow: /profile
+Disallow: /feedback
+Disallow: /statistics
+Disallow: /displaystats
+Disallow: /browse-subject
+Disallow: /browse-author
+Disallow: /*/browse-subject
+Disallow: /*/browse-author
+Sitemap: http://essuir.sumdu.edu.ua/htmlmap

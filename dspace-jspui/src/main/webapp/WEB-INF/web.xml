@@ -278,6 +278,19 @@
   </servlet>
 
   <servlet>
+    <servlet-name>filemap</servlet-name>
+    <servlet-class>org.dspace.app.webui.servlet.SitemapServlet</servlet-class>
+    <init-param>
+      <param-name>type</param-name>
+      <param-value>sitemaps.org</param-value>
+    </init-param>
+    <init-param>
+      <param-name>sitemapPrefix</param-name>
+      <param-value>filemap</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet>
     <servlet-name>internal-error</servlet-name>
     <servlet-class>org.dspace.app.webui.servlet.InternalErrorServlet</servlet-class>
   </servlet>
@@ -617,6 +630,11 @@
     <servlet-name>htmlmap</servlet-name>
     <url-pattern>/htmlmap</url-pattern>
   </servlet-mapping>
+
+ <servlet-mapping>
+    <servlet-name>filemap</servlet-name>
+    <url-pattern>/filemap</url-pattern>
+ </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>internal-error</servlet-name>

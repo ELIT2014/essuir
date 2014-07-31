@@ -7,22 +7,21 @@
  */
 package org.dspace.app.webui.servlet;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.SQLException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
 import org.dspace.app.webui.util.JSPManager;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.core.Utils;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
 
 /**
  * Servlet for retrieving sitemaps.
@@ -45,11 +44,18 @@ public class SitemapServlet extends DSpaceServlet
     /** true if we are for serving sitemap.org sitemaps, false otherwise */
     private boolean forSitemapsOrg;
 
+    private String sitemapPrefix;
+
     public void init()
     {
         forSitemapsOrg = false;
 
         String initParam = getInitParameter("type");
+        sitemapPrefix = getInitParameter("sitemapPrefix");
+
+        if (sitemapPrefix == null) {
+            sitemapPrefix = "sitemap";
+        }
 
         if (initParam != null && initParam.equalsIgnoreCase("sitemaps.org"))
         {
@@ -70,7 +76,7 @@ public class SitemapServlet extends DSpaceServlet
 
         String ext = (forSitemapsOrg ? ".xml.gz" : ".html");
         String mimeType = (forSitemapsOrg ? "text/xml" : "text/html");
-        String fileStem = (param == null ? "sitemap_index" : "sitemap" + param);
+        String fileStem = sitemapPrefix + (param == null ? "_index" : param);
 
         sendFile(request, response, fileStem + ext, mimeType, forSitemapsOrg);
     }

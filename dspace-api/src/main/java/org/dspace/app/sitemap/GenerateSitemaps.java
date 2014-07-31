@@ -7,33 +7,23 @@
  */
 package org.dspace.app.sitemap;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import org.apache.commons.cli.*;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.dspace.content.*;
+import org.dspace.core.ConfigurationManager;
+import org.dspace.core.Constants;
+import org.dspace.core.Context;
+import org.dspace.core.LogManager;
+import ua.edu.sumdu.olymp.essuir.FilemapsGenerator;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.Date;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.PosixParser;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.dspace.content.Collection;
-import org.dspace.content.Community;
-import org.dspace.content.Item;
-import org.dspace.content.ItemIterator;
-import org.dspace.core.ConfigurationManager;
-import org.dspace.core.Context;
-import org.dspace.core.LogManager;
 
 /**
  * Command-line utility for generating HTML and Sitemaps.org protocol Sitemaps.
@@ -150,8 +140,11 @@ public class GenerateSitemaps
     {
         String sitemapStem = ConfigurationManager.getProperty("dspace.url")
                 + "/sitemap";
+        String filemapStem = ConfigurationManager.getProperty("dspace.url")
+                + "/filemap";
         String htmlMapStem = ConfigurationManager.getProperty("dspace.url")
                 + "/htmlmap";
+        String basicURLStem = ConfigurationManager.getProperty("dspace.url");
         String handleURLStem = ConfigurationManager.getProperty("dspace.url")
                 + "/handle/";
 
@@ -163,6 +156,7 @@ public class GenerateSitemaps
         
         AbstractGenerator html = null;
         AbstractGenerator sitemapsOrg = null;
+        AbstractGenerator filemapsOrg = null;
 
         if (makeHTMLMap)
         {
@@ -174,6 +168,8 @@ public class GenerateSitemaps
         {
             sitemapsOrg = new SitemapsOrgGenerator(outputDir, sitemapStem
                     + "?map=", null);
+
+            filemapsOrg = new FilemapsGenerator(outputDir, filemapStem + "?map=", null);
         }
 
         Context c = new Context();
@@ -229,6 +225,38 @@ public class GenerateSitemaps
                 {
                     sitemapsOrg.addURL(url, lastMod);
                 }
+
+                Bundle[] bundles = i.getBundles("ORIGINAL");
+                for (int j = 0; j < bundles.length; j++) {
+                    Bitstream[] bitstreams = bundles[j].getBitstreams();
+
+                    for (int k = 0; k < bitstreams.length; k++)  {
+                        // Skip internal types
+                        if (!bitstreams[k].getFormat().isInternal()) {
+
+                            // Work out what the bitstream link should be
+                            // (persistent
+                            // ID if item has Handle)
+                            String bsLink = basicURLStem;
+
+                            if ((i.getHandle() != null)
+                                    && (bitstreams[k].getSequenceID() > 0))
+                            {
+                                bsLink = bsLink + "/bitstream/"
+                                        + i.getHandle() + "/"
+                                        + bitstreams[k].getSequenceID() + "/";
+
+                                bsLink = bsLink
+                                        + FilemapsGenerator.encodeBitstreamName(bitstreams[k]
+                                                .getName(),
+                                        Constants.DEFAULT_ENCODING);
+
+                                filemapsOrg.addURL(bsLink, lastMod);
+                            }
+                        }
+                    }
+                }
+
                 i.decache();
 
                 itemCount++;
@@ -247,6 +275,12 @@ public class GenerateSitemaps
             {
                 int files = sitemapsOrg.finish();
                 log.info(LogManager.getHeader(c, "write_sitemap",
+                        "type=html,num_files=" + files + ",communities="
+                                + comms.length + ",collections=" + colls.length
+                                + ",items=" + itemCount));
+
+                files = filemapsOrg.finish();
+                log.info(LogManager.getHeader(c, "write_filemap",
                         "type=html,num_files=" + files + ",communities="
                                 + comms.length + ",collections=" + colls.length
                                 + ",items=" + itemCount));

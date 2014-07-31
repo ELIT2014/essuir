@@ -11,6 +11,8 @@
 # See org.dspace.core.Email for information on the format of this file.
 #
 Subject: DSpace: Internal Server Error
+Привет, Андрей! :)
+
 An internal server error occurred on {0}:
 
 Date:       {1}

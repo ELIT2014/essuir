@@ -3,8 +3,12 @@
 # Parameters: {0} The name of the DSpace instance
 #             {1} The URL of the DSpace instance 
 #             {2} Name:
-#             {3} Email:
-#             {4} Registration Date:
+#             {3} Chair:
+#             {4} Faculty:
+#             {5} Position:
+#             {6} Phone:
+#             {7} Email:
+#             {8} Registration Date:
 #
 # See org.dspace.core.Email for information on the format of this file.
 #
@@ -13,5 +17,9 @@ Subject: DSpace: Registration Notification
 A new user has registered on {0} at {1}:
 
 Name:                   {2}
-Email:                  {3}
-Date:                   {4}
+Faculty:                {4}
+Chair:                  {3}
+Position:               {5}
+Phone:                  {6}
+Email:                  {7}
+Date:                   {8}
