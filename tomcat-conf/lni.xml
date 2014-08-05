@@ -1,0 +1,7 @@
+<?xml version='1.0'?>
+<Context
+    docBase="/home/dspace/webapps/lni"
+    debug="0"
+    reloadable="true"
+    cachingAllowed="false"
+    allowLinking="true"/>
