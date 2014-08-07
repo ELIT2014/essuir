@@ -9,17 +9,6 @@ CREATE TABLE authors
   CONSTRAINT authors_pkey PRIMARY KEY (surname_en , initials_en )			
 );
 
-CREATE TABLE chair
-(
-  chair_id integer NOT NULL,
-  chair_name character varying(256) NOT NULL,
-  faculty_id integer,
-  CONSTRAINT chair_pkey PRIMARY KEY (chair_id ),
-  CONSTRAINT chair_faculty_id_fkey FOREIGN KEY (faculty_id)
-      REFERENCES faculty (faculty_id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE SET NULL
-);
-
 CREATE TABLE eperson_service
 (
   eperson_id integer NOT NULL,
@@ -40,5 +29,21 @@ CREATE TABLE faculty
   CONSTRAINT faculty_pkey PRIMARY KEY (faculty_id )
 );
 
+CREATE TABLE chair
+(
+  chair_id integer NOT NULL,
+  chair_name character varying(256) NOT NULL,
+  faculty_id integer,
+  CONSTRAINT chair_pkey PRIMARY KEY (chair_id ),
+  CONSTRAINT chair_faculty_id_fkey FOREIGN KEY (faculty_id)
+      REFERENCES faculty (faculty_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL
+);
+
 ALTER TABLE eperson ADD COLUMN chair_id integer;
 ALTER TABLE eperson ADD COLUMN position character varying(128);
+
+ALTER TABLE authors OWNER TO dspace;
+ALTER TABLE eperson_service OWNER TO dspace;
+ALTER TABLE faculty OWNER TO dspace;
+ALTER TABLE chair OWNER TO dspace;
