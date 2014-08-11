@@ -270,8 +270,8 @@ public class DescribeStep extends AbstractProcessingStep
                     || (inputType.equals("twobox"))
                     || (inputType.equals("textarea")))
             {
-                readText(request, item, schema, element, qualifier, inputs[j]
-                        .getRepeatable(), LANGUAGE_QUALIFIER);
+                readText(request, item, schema, element, qualifier, true/*inputs[j]
+                        .getRepeatable()*/, LANGUAGE_QUALIFIER);
             }
             else
             {

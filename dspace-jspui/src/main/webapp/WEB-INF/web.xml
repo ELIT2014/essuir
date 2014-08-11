@@ -493,8 +493,28 @@
     <servlet-name>shibboleth-login</servlet-name>
     <url-pattern>/shibboleth-login</url-pattern>
   </servlet-mapping>
- 
-  <!-- Servlet Mappings -->
+
+  <servlet>
+    <servlet-name>dsrequest</servlet-name>
+    <servlet-class>ua.edu.sumdu.essuir.RequestServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>dsrequest</servlet-name>
+    <url-pattern>/dsrequest</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>uploader</servlet-name>
+    <servlet-class>ua.edu.sumdu.essuir.UploadServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>uploader</servlet-name>
+    <url-pattern>/upload/upload</url-pattern>
+  </servlet-mapping>
+
+    <!-- Servlet Mappings -->
 
   <servlet-mapping>
     <servlet-name>authorize</servlet-name>

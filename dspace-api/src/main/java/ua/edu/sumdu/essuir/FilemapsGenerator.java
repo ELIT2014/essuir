@@ -1,4 +1,4 @@
-package ua.edu.sumdu.olymp.essuir;
+package ua.edu.sumdu.essuir;
 
 import org.dspace.app.sitemap.SitemapsOrgGenerator;
 

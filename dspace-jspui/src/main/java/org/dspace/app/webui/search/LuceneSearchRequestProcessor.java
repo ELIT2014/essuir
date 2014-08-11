@@ -172,6 +172,11 @@ public class LuceneSearchRequestProcessor implements SearchRequestProcessor
                     sortOption = SortOption.getSortOption(sortBy);
                     qArgs.setSortOption(sortOption);
                 }
+                else
+                {
+                    sortOption = SortOption.getSortOption(2);
+                    qArgs.setSortOption(sortOption);
+                }
 
                 if (SortOption.ASCENDING.equalsIgnoreCase(order))
                 {

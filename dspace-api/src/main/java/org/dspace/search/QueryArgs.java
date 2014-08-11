@@ -211,6 +211,24 @@ public class QueryArgs
             	}
         	}
         }
+
+        String tmp_query = request.getParameter("type");
+
+        if (tmp_query != null && !tmp_query.equals("any"))
+        {
+            query.add(tmp_query.trim());
+            field.add("type");
+            conjunction.add("AND");
+        }
+
+        tmp_query = request.getParameter("lang");
+        if (tmp_query != null && !tmp_query.equals(""))
+        {
+            query.add(tmp_query.trim());
+            field.add("language");
+            conjunction.add("AND");
+        }
+
         Iterator<String> iquery = query.iterator();
         Iterator<String> ifield = field.iterator();
         Iterator<String> iconj = conjunction.iterator();

@@ -1605,4 +1605,60 @@ public class EPerson extends DSpaceObject
 
         return 0;
     }
+
+    public int getChair()
+    {
+        return myRow.getIntColumn("chair_id");
+    }
+
+    public void setChair(int chair)
+    {
+        if (chair < 1)
+            myRow.setColumnNull("chair_id");
+        else
+            myRow.setColumn("chair_id", chair);
+        modified = true;
+    }
+
+    public String[] getDepartment() {
+        String[] res = {"-", "-"};
+
+        try {
+            org.dspace.storage.rdbms.TableRowIterator tri = null;
+
+            try {
+                tri = org.dspace.storage.rdbms.DatabaseManager.query(myContext, "SELECT chair_name, faculty_name " +
+                        "  FROM chair " +
+                        "  LEFT JOIN faculty ON chair.faculty_id = faculty.faculty_id " +
+                        "  WHERE chair_id = " + getChair() + " ");
+
+                if (tri.hasNext()) {
+                    org.dspace.storage.rdbms.TableRow row = tri.next();
+
+                    res[0] = row.getStringColumn("chair_name");
+                    if (res[0] == null) res[0] = "-";
+
+                    res[1] = row.getStringColumn("faculty_name");
+                    if (res[1] == null) res[1] = "-";
+                }
+            } finally {
+                if (tri != null)
+                    tri.close();
+            }
+        } catch (java.sql.SQLException e) {
+        }
+
+        return res;
+    }
+
+    public String getPosition() {
+        return myRow.getStringColumn("position");
+    }
+
+    public void setPosition(String newPosition) {
+        myRow.setColumn("position", newPosition);
+
+        modified = true;
+    }
+
 }

@@ -113,6 +113,8 @@ public class EPersonAdminServlet extends DSpaceServlet
             String oldEmail = e.getEmail();
             String newEmail = request.getParameter("email").trim();
             String netid = request.getParameter("netid");
+            String chairid = request.getParameter("chair_id");
+            String position = request.getParameter("position");
 
             if (!newEmail.equals(oldEmail))
             {
@@ -156,6 +158,9 @@ public class EPersonAdminServlet extends DSpaceServlet
                             .getParameter("require_certificate") != null)
                             && request.getParameter("require_certificate")
                                     .equals("true"));
+                    e.setChair(chairid == null ? -1 : Integer.parseInt(chairid));
+
+                    e.setPosition(position == null ? "" : position);
 
                     e.update();
 
@@ -224,6 +229,10 @@ public class EPersonAdminServlet extends DSpaceServlet
                         .getParameter("require_certificate") != null)
                         && request.getParameter("require_certificate").equals(
                                 "true"));
+
+                e.setChair(chairid == null ? -1 : Integer.parseInt(chairid));
+
+                e.setPosition(position == null ? "" : position);
 
                 e.update();
 
