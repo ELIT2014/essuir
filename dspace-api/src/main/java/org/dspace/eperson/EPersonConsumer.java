@@ -75,9 +75,15 @@ public class EPersonConsumer implements Consumer
                             Email adminEmail = Email.getEmail(I18nUtil.getEmailFilename(context.getCurrentLocale(), "registration_notify"));
                             adminEmail.addRecipient(notifyRecipient);
 
+                            String[] department = eperson.getDepartment();
+
                             adminEmail.addArgument(ConfigurationManager.getProperty("dspace.name"));
                             adminEmail.addArgument(ConfigurationManager.getProperty("dspace.url"));
                             adminEmail.addArgument(eperson.getFirstName() + " " + eperson.getLastName()); // Name
+                            adminEmail.addArgument(department[0]); // Chair
+                            adminEmail.addArgument(department[1]); // Faculty
+                            adminEmail.addArgument(eperson.getPosition()); // Position
+                            adminEmail.addArgument(eperson.getMetadata("phone")); // Phone
                             adminEmail.addArgument(eperson.getEmail());
                             adminEmail.addArgument(new Date());
 

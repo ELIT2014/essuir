@@ -126,15 +126,31 @@ public class EditProfileServlet extends DSpaceServlet
         String firstName = request.getParameter("first_name");
         String phone = request.getParameter("phone");
         String language = request.getParameter("language");
+        int chairid = Integer.parseInt(request.getParameter("chair_id") == null ? "-1" : request.getParameter("chair_id"));
+        String position = request.getParameter("position");
 
         // Update the eperson
         eperson.setFirstName(firstName);
         eperson.setLastName(lastName);
         eperson.setMetadata("phone", phone);
         eperson.setLanguage(language);
+        eperson.setChair(chairid);
+        eperson.setPosition(position == null ? "" : position);
 
         // Check all required fields are there
-        return (!StringUtils.isEmpty(lastName) && !StringUtils.isEmpty(firstName));
+        if ((lastName == null) || lastName.equals("") ||
+                (firstName == null) || firstName.equals("") ||
+                (phone == null) || phone.equals("") ||
+                (language == null) || language.equals("") ||
+                (position == null) || position.equals("") ||
+                (chairid < 1))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     /**

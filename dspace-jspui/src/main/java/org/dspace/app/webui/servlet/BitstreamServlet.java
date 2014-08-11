@@ -221,5 +221,7 @@ public class BitstreamServlet extends DSpaceServlet
         Utils.bufferedCopy(is, response.getOutputStream());
         is.close();
         response.getOutputStream().flush();
+
+        ua.edu.sumdu.essuir.EssuirStatistics.updateBitstream(request, item.getID(), bitstream.getSequenceID());
     }
 }

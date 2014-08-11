@@ -384,7 +384,10 @@ public class ItemTag extends TagSupport
         JspWriter out = pageContext.getOut();
         HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
         Context context = UIUtil.obtainContext(request);
+
         Locale sessionLocale = UIUtil.getSessionLocale(request);
+        String locale = sessionLocale.toString();
+
         String configLine = styleSelection.getConfigurationForStyle(style);
 
         if (configLine == null)
@@ -528,7 +531,11 @@ public class ItemTag extends TagSupport
                             }
                         }
 
-                        if (isLink)
+                        if (field.startsWith("dc.type"))
+                        {
+                            out.print(getTypeLocalized(values[j].value, locale));
+                        }
+                        else if (isLink)
                         {
                             out.print("<a href=\"" + values[j].value + "\">"
                                     + Utils.addEntities(values[j].value) + "</a>");
@@ -626,6 +633,8 @@ public class ItemTag extends TagSupport
 
         out.println("</table><br/>");
 
+        listStatistics();
+
         listBitstreams();
 
         if (ConfigurationManager
@@ -700,6 +709,8 @@ public class ItemTag extends TagSupport
 
         out.println("</table></div><br/>");
 
+        listStatistics();
+
         listBitstreams();
 
         if (ConfigurationManager
@@ -749,6 +760,39 @@ public class ItemTag extends TagSupport
 
             out.println("</td></tr>");
         }
+    }
+
+    /**
+     * List statistics views of the item
+     */
+    private void listStatistics() throws IOException {
+        JspWriter out = pageContext.getOut();
+
+        HttpServletRequest request = (HttpServletRequest) pageContext
+                .getRequest();
+
+        out.println("<table align=\"center\" width=\"400\" class=\"reportBlock\">");
+        out.println("<tr class=\"reportOddRow\"><th colspan=\"2\">" +
+                LocaleSupport.getLocalizedMessage(pageContext, "metadata.viewed") +
+                "</th></tr>");
+
+        String[][] views = ua.edu.sumdu.essuir.EssuirStatistics.updateItem(request, item.getID(), 0.8);
+
+        if (views != null) {
+            for (int i = 0; i < views.length; i++) {
+                out.println("<tr>");
+                out.println("<td>" +
+                        org.dspace.statistics.util.LocationUtils.getCountryName(views[i][0])
+                        + "</td>");
+                out.println("<td width=\"120\">" + views[i][1] + "</td>");
+                out.println("</tr>");
+            }
+        } else {
+            out.println("<tr><td colspan=\"2\">No available statistics</td></tr>");
+        }
+
+        out.println("</table>");
+        out.println("<br/>");
     }
 
     /**
@@ -849,6 +893,9 @@ public class ItemTag extends TagSupport
                     + "</th><th id=\"t4\" class=\"standard\">"
                     + LocaleSupport.getLocalizedMessage(pageContext,
                             "org.dspace.app.webui.jsptag.ItemTag.fileformat")
+                    + "</th><th id=\"t4\" class=\"standard\">"
+                    + LocaleSupport.getLocalizedMessage(pageContext,
+                            "org.dspace.app.webui.jsptag.ItemTag.downloads")
                     + "</th><th>&nbsp;</th></tr>");
 
             	// if primary bitstream is html, display a link for only that one to
@@ -888,9 +935,13 @@ public class ItemTag extends TagSupport
                     out.print(UIUtil.formatFileSize(primaryBitstream.getSize()));
                     out.print("</td><td headers=\"t4\" class=\"standard\">");
             		out.print(primaryBitstream.getFormatDescription());
-            		out
-                        .print("</td><td class=\"standard\"><a class=\"btn btn-primary\" target=\"_blank\" href=\"");
-            		out.print(request.getContextPath());
+                    out.print("</td><td headers=\"t4\" class=\"standard\">");
+                    out.print(ua.edu.sumdu.essuir.EssuirStatistics.selectBitstream(
+                            request, item.getID(), primaryBitstream.getSequenceID()));
+
+
+                    out.print("</td><td class=\"standard\"><a target=\"_blank\" href=\"");
+                    out.print(request.getContextPath());
             		out.print("/html/");
             		out.print(handle + "/");
             		out
@@ -969,7 +1020,11 @@ public class ItemTag extends TagSupport
             					out
                                 .print("</td><td headers=\"t4\" class=\"standard\">");
             					out.print(bitstreams[k].getFormatDescription());
-            					out
+                                out.print("</td><td headers=\"t4\" class=\"standard\">");
+                                out.print(ua.edu.sumdu.essuir.EssuirStatistics.selectBitstream(
+                                        request, item.getID(), bitstreams[k].getSequenceID()) );
+
+                                out
                                     .print("</td><td class=\"standard\" align=\"center\">");
 
             					// is there a thumbnail bundle?
@@ -1150,4 +1205,23 @@ public class ItemTag extends TagSupport
         }
         return null;
     }
+
+    private static String prevSessionLocale = "";
+    private static java.util.Hashtable<String, String> typesTable = new java.util.Hashtable<String, String>();
+
+    public static String getTypeLocalized(String type, String locale) {
+        if (!locale.equals(prevSessionLocale)) {
+            typesTable.clear();
+            java.util.List vList = org.dspace.app.util.DCInputsReader.getInputsReader(locale).getPairs("common_types");
+
+            for (int i = 0; i < vList.size(); i += 2)
+                typesTable.put((String) vList.get(i + 1), (String) vList.get(i));
+
+            prevSessionLocale = locale;
+        }
+
+        String result = typesTable.get(type);
+        return result == null ? type : result;
+    }
+
 }

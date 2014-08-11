@@ -79,6 +79,9 @@ public class DCInputsReader
      * form-interleaved, there will be a modest win.
      */
     private DCInputSet lastInputSet = null;
+    private static String prevSessionLocale = "";
+    private static DCInputsReader inputsReader = null;
+
 
     /**
      * Parse an XML encoded submission forms template file, and create a hashmap
@@ -684,5 +687,28 @@ public class DCInputsReader
         }
         // Didn't find a text node
         return null;
+    }
+
+    public static DCInputsReader getInputsReader(String sessionLocale) {
+        try {
+            if (inputsReader == null)
+                inputsReader = new DCInputsReader();
+
+            if (!sessionLocale.equals(prevSessionLocale)) {
+                StringBuilder fileName = new StringBuilder(ConfigurationManager.getProperty("dspace.dir")
+                        + File.separator + "config" + File.separator + FORM_DEF_FILE);
+
+                if (!sessionLocale.equals("en"))
+                    fileName.insert(fileName.length() - 4, "_" + sessionLocale);
+
+                inputsReader.buildInputs(fileName.toString());
+
+                prevSessionLocale = sessionLocale;
+            }
+        } catch (DCInputsReaderException e) {
+            e.printStackTrace();
+        }
+
+        return inputsReader;
     }
 }
