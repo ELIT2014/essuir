@@ -30,9 +30,6 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
-import essuir.GeoIp;
-
-
 public class EssuirStatistics {
 
 	public static Hashtable<Integer, Long> getViewStatistics(int[] ids) {
@@ -106,16 +103,14 @@ public class EssuirStatistics {
 	    	Context context = UIUtil.obtainContext(request);
 	        
 	    	String[][] views = null;
-	    	int cnts = -1;
 	
 	        try {
 	            views = select(request, item_id, sequence_id, countryCode);
 	
 	            if (views == null || views.length == 0) {
-	                cnts = 1;
 	                add(context, item_id, sequence_id, 1, countryCode);
 	            } else {
-	            	cnts = Integer.parseInt(views[0][1]);            	
+	            	int cnts = Integer.parseInt(views[0][1]);
 	            	Random rand = new Random();
 	            	int a = rand.nextInt(1024);
 	            	

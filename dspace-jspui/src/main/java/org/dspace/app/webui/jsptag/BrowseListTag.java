@@ -568,7 +568,9 @@ public class BrowseListTag extends TagSupport
                             		{
                             			argument = "vfocus";
                             		}
-                            		startLink = "<a href=\"" + hrq.getContextPath() + "/browse?type=" + browseType[colIdx] + "&amp;" +
+                                    // Special sorting type by date DESC
+                                    String sortParameters = "&amp;"+"sort_by=2"+"&amp;"+"order=DESC";
+                                    startLink = "<a href=\"" + hrq.getContextPath() + "/browse?type=" + browseType[colIdx] + sortParameters +"&amp;" +
                                         argument + "=" + URLEncoder.encode(value,"UTF-8");
 
                                     if (metadataArray[j].language != null)
