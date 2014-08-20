@@ -613,8 +613,13 @@ public class ItemTag extends TagSupport
 	                            argument = "value";
 	                            value = values[j].value;
 	                        }
+                            // add sorting by date DESC type for author category
+                            String sortParameters = "";
+                            if (browseIndex.equals("author")){
+                                sortParameters = "&amp;"+"sort_by=2"+"&amp;"+"order=DESC";
+                            }
 	                    	out.print("<a class=\"" + ("authority".equals(argument)?"authority ":"") + browseIndex + "\""
-	                                                + "href=\"" + request.getContextPath() + "/browse?type=" + browseIndex + "&amp;" + argument + "="
+	                                                + "href=\"" + request.getContextPath() + "/browse?type=" + browseIndex + sortParameters + "&amp;" + argument + "="
 	                    				+ URLEncoder.encode(value, "UTF-8") + "\">" + Utils.addEntities(values[j].value)
 	                    				+ "</a>");
 	                    }

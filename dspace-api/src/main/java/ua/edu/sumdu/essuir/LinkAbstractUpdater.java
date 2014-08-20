@@ -1,4 +1,4 @@
-package ua.edu.sumdu.essuir;
+package ua.edu.sumdu.olymp.essuir;
 
 import org.dspace.content.DCValue;
 import org.dspace.content.Item;
@@ -134,7 +134,7 @@ public class LinkAbstractUpdater {
 
             // if need add repository link
             if (!newValues[j].contains(handleURLStem)) {
-                int lang = newValues.length == 1 ? detectLang(newValues[j]) : j;
+                int lang = (newValues.length == 1 || newValues.length > 3) ? detectLang(newValues[j]) : j;
 
                 newValues[j] = newValues[j] + "\n" + templates[lang] + url;
                 needUpdate |= true;

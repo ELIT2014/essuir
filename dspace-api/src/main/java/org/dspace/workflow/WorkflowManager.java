@@ -918,6 +918,9 @@ public class WorkflowManager
             // Get the collection
             Collection coll = wi.getCollection();
 
+            log.warn(LogManager.getHeader(c, "notifyOfCuration", "prepare to email users" +
+                    " of workflow_item_id" + wi.getID()) + ", emais count = " + epa.length);
+
             for (int i = 0; i < epa.length; i++)
             {
                 Locale supportedLocale = I18nUtil.getEPersonLocale(epa[i]);
@@ -932,6 +935,9 @@ public class WorkflowManager
                 email.addRecipient(epa[i].getEmail());
                 email.send();
             }
+
+            log.warn(LogManager.getHeader(c, "notifyOfCuration", "completed email users" +
+                    " of workflow_item_id" + wi.getID()) + ", emais count = " + epa.length);
         }
         catch (MessagingException e)
         {
@@ -955,6 +961,8 @@ public class WorkflowManager
         }
         else
         {
+// TODO Slow email send (40 seconds per email)
+// TODO Try to use gmail as transfer server
             try
             {
                 // Get the item title
@@ -967,6 +975,9 @@ public class WorkflowManager
                 Collection coll = wi.getCollection();
 
                 String message = "";
+
+                log.warn(LogManager.getHeader(c, "notifyGroupofTask",
+                        "prepare to email user" + " group_id" + ", workflow_item_id" + wi.getID()) + ", emails count = " + epa.length);
 
                 for (int i = 0; i < epa.length; i++)
                 {
@@ -999,11 +1010,14 @@ public class WorkflowManager
                     email.addRecipient(epa[i].getEmail());
                     email.send();
                 }
+
+                log.warn(LogManager.getHeader(c, "notifyGroupofTask",
+                        "completed email user" + " group_id" + ", workflow_item_id" + wi.getID()) + ", emails count = " + epa.length);
             }
             catch (MessagingException e)
             {
                 String gid = (mygroup != null) ?
-                             String.valueOf(mygroup.getID()) : "none";
+                        String.valueOf(mygroup.getID()) : "none";
                 log.warn(LogManager.getHeader(c, "notifyGroupofTask",
                         "cannot email user" + " group_id" + gid
                                 + " workflow_item_id" + wi.getID()));

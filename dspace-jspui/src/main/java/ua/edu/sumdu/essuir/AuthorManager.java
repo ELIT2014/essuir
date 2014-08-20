@@ -40,9 +40,21 @@ public class AuthorManager {
 			        		") AS stat ON stat.item_id = metadatavalue.item_id " +
 		        			" " +
 			        		"WHERE metadata_field_id = 3 " +
-			        		"GROUP BY text_value " +
-			        		"ORDER BY total_sum DESC " +
-			        		"LIMIT 30 "
+                            /*
+                                 remove not SSU authors from top10
+                               - Litnarovich the first 22/12/2012
+                            */
+                            "AND (" +
+                            "text_value != 'Літнарович, Руслан Миколайович'" +
+                            "AND " +
+                            "text_value != 'Litnarovych, Ruslan Mykolaiovych'" +
+                            "AND " +
+                            "text_value != 'Литнарович, Руслан Николаевич'" +
+                            ")"+
+
+                            "GROUP BY text_value " +
+                            "ORDER BY total_sum DESC " +
+                            "LIMIT 33 "
 		        		);
 		        
 		        while (res.next()) {
