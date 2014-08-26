@@ -23,38 +23,65 @@
   --%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
-  
+
 <%@ page import="java.util.List" %>
-<ol class="breadcrumb btn-success">
+<%@ page import="java.util.Locale"%>
+<%@ page import="org.dspace.core.I18nUtil" %>
 <%
-    List parentTitles = (List) request.getAttribute("dspace.layout.parenttitles");
-    List parentLinks = (List) request.getAttribute("dspace.layout.parentlinks");
-
-    for (int i = 0; i < parentTitles.size(); i++)
+    Locale[] supportedLocales = I18nUtil.getSupportedLocales();
+    if (supportedLocales != null && supportedLocales.length > 1)
     {
-        String s = (String) parentTitles.get(i);
-        String u = (String) parentLinks.get(i);
-
-        if (u.equals(""))
+%>
+<div style="position:absolute;right:30px;">
+<ol class="breadcrumb btn-success">
+    <form method="get" name="repost" action="">
+        <input type ="hidden" name ="locale"/>
+    </form>
+    <%
+        for (int i = supportedLocales.length-1; i >= 0; i--)
         {
-            if (i == parentTitles.size())
-            {
-%>
-<li class="active"><%= s %></li>
-<%           
-            }
-            else
-            {
-%>
-<li><%= s %></li>
-<%			}
+    %>
+    <a href="" class ="langChangeOn"
+       onclick="javascript:document.repost.locale.value='<%=supportedLocales[i].toString()%>';
+               document.repost.submit();">
+        <img width="20px" height="14px" src="/flags/<%=supportedLocales[i].toString()%>.gif" alt="<%= supportedLocales[i].getDisplayLanguage(supportedLocales[i])%>"/>
+    </a>
+    <%
         }
-        else
-        {
-%>
-  <li><a href="<%= request.getContextPath() %><%= u %>"><%= s %></a></li>
+    %>
+</div>
 <%
-        }
-}
+    }
 %>
+    <%
+        List parentTitles = (List) request.getAttribute("dspace.layout.parenttitles");
+        List parentLinks = (List) request.getAttribute("dspace.layout.parentlinks");
+
+        for (int i = 0; i < parentTitles.size(); i++)
+        {
+            String s = (String) parentTitles.get(i);
+            String u = (String) parentLinks.get(i);
+
+            if (u.equals(""))
+            {
+                if (i == parentTitles.size())
+                {
+    %>
+    <li class="active"><%= s %></li>
+    <%
+    }
+    else
+    {
+    %>
+    <li><%= s %></li>
+    <%			}
+    }
+    else
+    {
+    %>
+    <li><a href="<%= request.getContextPath() %><%= u %>"><%= s %></a></li>
+    <%
+            }
+        }
+    %>
 </ol>
