@@ -89,7 +89,7 @@
              <ul class="dropdown-menu">
                <li><a href="<%= request.getContextPath() %>/community-list"><fmt:message key="jsp.layout.navbar-default.communities-collections"/></a></li>
 				<li class="divider"></li>
-				<li class="dropdown-header">Browse Items by:</li>
+				<li class="dropdown-header"><fmt:message key="jsp.layout.navbar-default.browse-items"/></li>
 				<%-- Insert the dynamic browse indices here --%>
 				
 				<%
@@ -101,10 +101,14 @@
 				      			<li><a href="<%= request.getContextPath() %>/browse?type=<%= bix.getName() %>"><fmt:message key="<%= key %>"/></a></li>
 					<%	
 					}
-				%>
-				    
+				%>    
 				<%-- End of dynamic browse indices --%>
-
+				<li class="divider"></li>
+				<li><a href="<%= request.getContextPath() %>/new50items.jsp"><fmt:message key="jsp.collection-home.recentsub"/></a></li>
+				<li><a href="<%= request.getContextPath() %>/top10items.jsp"><fmt:message key="jsp.top50items"/></a></li>
+				<li><a href="<%= request.getContextPath() %>/top10authors.jsp"><fmt:message key="jsp.top10authors"/></a></li>
+				<li><a href="<%= request.getContextPath() %>/faq.jsp"><fmt:message key="jsp.layout.navbar-default.faq"/></a></li>
+				<li><a href="<%= request.getContextPath() %>/pub_stat.jsp"><fmt:message key="jsp.layout.navbar-admin.statistics"/></a></li>
             </ul>
           </li>
           <li class="<%= ( currentPage.endsWith( "/help" ) ? "active" : "" ) %>"><dspace:popup page="<%= LocaleSupport.getLocalizedMessage(pageContext, \"help.index\") %>"><fmt:message key="jsp.layout.navbar-default.help"/></dspace:popup></li>
@@ -130,6 +134,19 @@
                <li><a href="<%= request.getContextPath() %>/profile"><fmt:message key="jsp.layout.navbar-default.edit"/></a></li>
 
 		<%
+				   String userEmail = "";
+
+		   if (user != null)
+			   userEmail = user.getEmail().toLowerCase();
+
+		   if (isAdmin || userEmail.equals("library_ssu@ukr.net") || userEmail.equals("libconsult@rambler.ru")) {
+		%>
+			   <li class="divider"></li>
+			   <li><a href="<%= request.getContextPath() %>/home_stat.jsp"><fmt:message key="jsp.layout.navbar-admin.report"/></a></li>
+			   <li><a href="<%= request.getContextPath() %>/authors.jsp"><fmt:message key="jsp.layout.navbar-admin.autocomplete"/></a></li>
+			   <li><a href="<%= request.getContextPath() %>/upload/manage.jsp"><fmt:message key="jsp.layout.navbar-admin.remote"/></a></li>
+		<%
+		  }
 		  if (isAdmin)
 		  {
 		%>
