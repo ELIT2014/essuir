@@ -228,7 +228,7 @@
         String so_name_key = "browse.order." + (bi.isAscending() ? "asc" : "desc");
 %>
     <%-- give us the top report on what we are looking at --%>
-    <fmt:message var="bi_name" key="<%= bi_name_key %>"/>
+    <!-- <fmt:message var="bi_name" key="<%= bi_name_key %>"/>
     <fmt:message var="so_name" key="<%= so_name_key %>"/>
     <div align="center" class="browse_range">
         <fmt:message key="jsp.collection-home.content.range">
@@ -238,7 +238,7 @@
             <fmt:param value="<%= Integer.toString(bi.getFinish()) %>"/>
             <fmt:param value="<%= Integer.toString(bi.getTotal()) %>"/>
         </fmt:message>
-    </div>
+    </div> -->
 
     <%--  do the top previous and next page links --%>
     <div align="center">
