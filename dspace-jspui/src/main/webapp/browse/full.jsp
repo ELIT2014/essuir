@@ -1,4 +1,4 @@
-<%--
+﻿<%--
 
     The contents of this file are subject to the license and copyright
     detailed in the LICENSE and NOTICE files at the root of the source
@@ -247,15 +247,27 @@
 	{
 %>	
 		<span><fmt:message key="browse.nav.jump"/></span>
-	                        <a class="label label-default" href="<%= sharedLink %>&amp;starts_with=0">0-9</a>
+		
+        <a class="label label-default" href="<%= sharedLink %>&amp;starts_with=0">0-9</a>
 <%
 	    for (char c = 'A'; c <= 'Z'; c++)
 	    {
 %>
-	                        <a class="label label-default" href="<%= sharedLink %>&amp;starts_with=<%= c %>"><%= c %></a>
+					<a class="label label-default" href="<%= sharedLink %>&amp;starts_with=<%= c %>"><%= c %></a>
 <%
 	    }
-%><br/>
+%>
+	<br/>
+<%
+	    char[] alphabit = {'А', 'Б', 'В', 'Г', 'Ґ', 'Д', 'Е', 'Є', 'Ж', 'З', 'И', 'І', 'Ї', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ь', 'Ю', 'Я'};
+	    for (char c : alphabit)
+	    {
+%>
+	                <a class="label label-default" href="<%= sharedLink %>&amp;starts_with=<%= c %>"><%= c %></a>
+<%
+	    }
+%>	
+		<br/>
 	    					<span><fmt:message key="browse.nav.enter"/></span>
 	    					<input type="text" name="starts_with"/>&nbsp;<input type="submit" class="btn btn-default" value="<fmt:message key="browse.nav.go"/>" />
 <%
