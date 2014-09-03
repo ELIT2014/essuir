@@ -245,17 +245,15 @@
 	// If we are not browsing by a date, render the string selection header //
 	else
 	{
-		String startsWith = (String) request.getParameter("starts_with");
-		String style = " class=\"label label-default\""; 	
 %>	
 		<span><fmt:message key="browse.nav.jump"/></span>
 		
-        <a <%= ((startsWith.charAt(0) == '0') ? style : "") %> href="<%= sharedLink %>&amp;starts_with=0">0-9</a>
+        <a class="label label-default" href="<%= sharedLink %>&amp;starts_with=0">0-9</a>
 <%
 	    for (char c = 'A'; c <= 'Z'; c++)
 	    {
 %>
-					<a<%= ((startsWith.charAt(0) == c) ? style : "") %> href="<%= sharedLink %>&amp;starts_with=<%= c %>"><%= c %></a>
+					<a class="label label-default" href="<%= sharedLink %>&amp;starts_with=<%= c %>"><%= c %></a>
 <%
 	    }
 %>
@@ -265,7 +263,7 @@
 	    for (char c : alphabit)
 	    {
 %>
-	                <a<%= ((startsWith.charAt(0) == c) ? style : "")  %> href="<%= sharedLink %>&amp;starts_with=<%= c %>"><%= c %></a>
+	                <a class="label label-default" href="<%= sharedLink %>&amp;starts_with=<%= c %>"><%= c %></a>
 <%
 	    }
 %>	
