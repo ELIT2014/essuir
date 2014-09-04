@@ -103,7 +103,7 @@
          <li class="dropdown">
 
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <fmt:message key="jsp.layout.navbar-default.loggedin">
-		      <fmt:param><%= StringUtils.abbreviate(navbarEmail, 20) %></fmt:param>
+            <fmt:param><%= StringUtils.abbreviate(navbarEmail, 35) %></fmt:param>
 		  </fmt:message> <b class="caret"></b></a>
 		<ul class="dropdown-menu">
                <li><a href="<%= request.getContextPath() %>/subscribe"><fmt:message key="jsp.layout.navbar-default.receive"/></a></li>
