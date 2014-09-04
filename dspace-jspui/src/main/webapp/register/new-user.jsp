@@ -65,6 +65,6 @@
     <br/>
 	<div class="alert alert-info"><fmt:message key="jsp.register.new-user.info3"/></div>
 
-    <dspace:include page="/components/contact-info.jsp" />
+<%--    <dspace:include page="/components/contact-info.jsp" /> --%>
 
 </dspace:layout>
