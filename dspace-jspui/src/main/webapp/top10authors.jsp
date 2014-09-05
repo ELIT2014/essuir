@@ -33,9 +33,9 @@
 	Locale sessionLocale = UIUtil.getSessionLocale(request);
 	String locale = sessionLocale.toString();
 
-	java.util.ArrayList<essuir.AuthorStatInfo> authors = essuir.AuthorManager.getTop10Author(locale);
+	java.util.ArrayList<ua.edu.sumdu.essuir.AuthorStatInfo> authors = ua.edu.sumdu.essuir.AuthorManager.getTop10Author(locale);
 	
-	for(essuir.AuthorStatInfo author : authors) {
+	for(ua.edu.sumdu.essuir.AuthorStatInfo author : authors) {
 	     %>
 	     <tr height="30">
 	     	<td><a href="/browse?type=author&value=<%= author.getName() %>"><%= author.getName() %></a></td>
