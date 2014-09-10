@@ -226,7 +226,7 @@
             if(ConfigurationManager.getBooleanProperty("webui.strengths.show"))
             {
 %>
-                [<%= ic.getCount(collections[i]) %>]
+                <span class="badge"><%= ic.getCount(collections[i]) %></span>
 <%
             }
 %>

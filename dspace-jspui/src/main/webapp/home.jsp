@@ -135,7 +135,7 @@
                     <a href="<%= request.getContextPath() %>/simple-search?query=(<%= query %>)"><%= typeLocale %></a>
                     <%
                     %>
-                    [<%= types.get(type) %>]
+                    <span class="badge"><%= types.get(type) %></span>
                     <%
                     %>
                 </td>
@@ -181,7 +181,7 @@
                                 if (ConfigurationManager.getBooleanProperty("webui.strengths.show"))
                                 {
                             %>
-                            [<%= ic.getCount(communities[i]) %>]
+                            <span class="badge"><%= ic.getCount(communities[i]) %></span>
                             <%
                                 }
 
