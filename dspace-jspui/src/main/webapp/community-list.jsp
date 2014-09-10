@@ -93,7 +93,7 @@
                 out.println("<div class=\"media-body\"><h4 class=\"media-heading\"><a href=\"" + request.getContextPath() + "/handle/" + cols[j].getHandle() + "\">" + cols[j].getMetadata("name") +"</a>");
 				if(ConfigurationManager.getBooleanProperty("webui.strengths.show"))
                 {
-                    out.println(" [" + ic.getCount(cols[j]) + "]");
+                    out.println("<span class=\"badge\">" + ic.getCount(cols[j]) + "</span>");
                 }
 				out.println("</h4>");
 				if (StringUtils.isNotBlank(cols[j].getMetadata("short_description")))
