@@ -16,7 +16,7 @@
 	org.dspace.core.Context context = org.dspace.app.webui.util.UIUtil.obtainContext(request); 
 %>
 
-<dspace:layout locbar="nolink" titlekey="jsp.top50items" feedData="NONE">
+<dspace:layout locbar="commLink" titlekey="jsp.top50items" feedData="NONE">
 
 <h2><fmt:message key="jsp.top10authors"/></h2>
 

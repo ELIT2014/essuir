@@ -4,7 +4,7 @@
 
 <% org.dspace.core.Context context = org.dspace.app.webui.util.UIUtil.obtainContext(request); %>
 
-<dspace:layout locbar="nolink" title="About" feedData="NONE">
+<dspace:layout locbar="commLink" title="About" feedData="NONE">
 
     <table  width="95%" align="center">
       <tr>

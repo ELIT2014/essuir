@@ -19,6 +19,6 @@
     faq = ConfigurationManager.readNewsFile(faq);
 %>
 
-<dspace:layout locbar="nolink" titlekey="jsp.layout.navbar-default.faq">
+<dspace:layout locbar="commLink" titlekey="jsp.layout.navbar-default.faq">
      <%= faq %>
 </dspace:layout>
