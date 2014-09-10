@@ -41,6 +41,6 @@
     ItemCounter ic = new ItemCounter(UIUtil.obtainContext(request));
 %>
 
-<dspace:layout locbar="nolink" titlekey="jsp.layout.navbar-admin.statistics">
+<dspace:layout locbar="commLink" titlekey="jsp.layout.navbar-admin.statistics">
      <%= stats %>
 </dspace:layout>

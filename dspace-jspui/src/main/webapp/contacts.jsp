@@ -6,7 +6,7 @@
 
 <%@ taglib uri="http://www.dspace.org/dspace-tags.tld" prefix="dspace" %>
 
-<dspace:layout locbar="nolink" title="Contacts" feedData="NONE">
+<dspace:layout locbar="commLink" title="Contacts" feedData="NONE">
 
 <%
     Locale sessionLocale = UIUtil.getSessionLocale(request);
