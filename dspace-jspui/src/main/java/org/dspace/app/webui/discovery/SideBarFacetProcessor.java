@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.dspace.app.webui.util.UIUtil;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Collection;
 import org.dspace.content.Community;
@@ -30,6 +31,7 @@ import org.dspace.plugin.CollectionHomeProcessor;
 import org.dspace.plugin.CommunityHomeProcessor;
 import org.dspace.plugin.PluginException;
 import org.dspace.plugin.SiteHomeProcessor;
+import ua.edu.sumdu.essuir.cache.AuthorCache;
 
 public class SideBarFacetProcessor implements CollectionHomeProcessor,
         CommunityHomeProcessor, SiteHomeProcessor
@@ -72,6 +74,15 @@ public class SideBarFacetProcessor implements CollectionHomeProcessor,
         {
             qResults = SearchUtils.getSearchService().search(context, scope,
                     queryArgs);
+
+            String locale = UIUtil.getSessionLocale(request).toString();
+
+            int facetPage = UIUtil.getIntParameter(request, "author_page");
+            if (facetPage == -1)
+                facetPage = 0;
+
+            AuthorCache.makeLocalizedAuthors(qResults.getFacetResult("author"), locale, facetPage);
+
             request.setAttribute("discovery.fresults",
                     qResults.getFacetResults());
             DiscoveryConfiguration discoveryConfiguration = SearchUtils

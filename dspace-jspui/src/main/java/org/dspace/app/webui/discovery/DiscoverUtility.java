@@ -610,11 +610,20 @@ public class DiscoverUtility
                     // add the already selected facet so to have a full
                     // top list
                     // if possible
-                    queryArgs.addFacetField(new DiscoverFacetField(facet
-                            .getIndexFieldName(),
-                            DiscoveryConfigurationParameters.TYPE_TEXT,
-                            facetLimit + 1 + alreadySelected, facet
-                                    .getSortOrder(), facetPage * facetLimit));
+                    if (facet.getIndexFieldName().equals("author")) {
+                        queryArgs.addFacetField(new DiscoverFacetField(facet
+                                .getIndexFieldName(),
+                                DiscoveryConfigurationParameters.TYPE_TEXT,
+                                (facetPage + 1) * 3 * facetLimit + alreadySelected + 10, facet
+                                .getSortOrder(), 0));
+                    } else {
+                        queryArgs.addFacetField(new DiscoverFacetField(facet
+                                .getIndexFieldName(),
+                                DiscoveryConfigurationParameters.TYPE_TEXT,
+                                facetLimit + 1 + alreadySelected, facet
+                                .getSortOrder(), facetPage * facetLimit
+                        ));
+                    }
                 }
             }
         }
