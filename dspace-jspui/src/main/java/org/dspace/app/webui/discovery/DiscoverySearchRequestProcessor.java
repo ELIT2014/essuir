@@ -55,6 +55,7 @@ import org.dspace.discovery.configuration.DiscoverySearchFilter;
 import org.dspace.discovery.configuration.DiscoverySearchFilterFacet;
 import org.dspace.discovery.configuration.DiscoverySortFieldConfiguration;
 import org.w3c.dom.Document;
+import ua.edu.sumdu.essuir.cache.AuthorCache;
 
 public class DiscoverySearchRequestProcessor implements SearchRequestProcessor
 {
@@ -149,6 +150,14 @@ public class DiscoverySearchRequestProcessor implements SearchRequestProcessor
         {
             qResults = SearchUtils.getSearchService().search(context,
                     container, queryArgs);
+
+            String locale = UIUtil.getSessionLocale(request).toString();
+
+            int facetPage = UIUtil.getIntParameter(request, "author_page");
+            if (facetPage == -1)
+                facetPage = 0;
+
+            AuthorCache.makeLocalizedAuthors(qResults.getFacetResult("author"), locale, facetPage);
         }
         catch (SearchServiceException e)
         {
@@ -341,7 +350,15 @@ public class DiscoverySearchRequestProcessor implements SearchRequestProcessor
         {
             qResults = SearchUtils.getSearchService().search(context, scope,
                     queryArgs);
-            
+
+            String locale = UIUtil.getSessionLocale(request).toString();
+
+            int facetPage = UIUtil.getIntParameter(request, "author_page");
+            if (facetPage == -1)
+                facetPage = 0;
+
+            AuthorCache.makeLocalizedAuthors(qResults.getFacetResult("author"), locale, facetPage);
+
             List<Community> resultsListComm = new ArrayList<Community>();
             List<Collection> resultsListColl = new ArrayList<Collection>();
             List<Item> resultsListItem = new ArrayList<Item>();

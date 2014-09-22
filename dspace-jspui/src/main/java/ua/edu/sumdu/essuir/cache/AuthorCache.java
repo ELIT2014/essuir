@@ -5,12 +5,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.TreeSet;
+import java.util.*;
 
 import org.dspace.content.DCValue;
 import org.dspace.core.ConfigurationManager;
+import org.dspace.discovery.DiscoverResult;
 
 
 public class AuthorCache {
@@ -44,7 +43,30 @@ public class AuthorCache {
 		
 		return new ArrayList<String>(res);
 	}
-	
+
+    public static void makeLocalizedAuthors(List<DiscoverResult.FacetResult> authors, String locale, int facetPage) {
+        int offset = facetPage * 10;
+        int remain = 11;
+        ListIterator<DiscoverResult.FacetResult> it = authors.listIterator();
+        while (it.hasNext()) {
+            DiscoverResult.FacetResult author = it.next();
+            String name = author.getDisplayedValue();
+            if (name.equals(getAuthor(name, locale))) {
+                if (offset == 0) {
+                    if (remain > 0) {
+                        remain--;
+                    } else {
+                        it.remove();
+                    }
+                } else {
+                    offset--;
+                    it.remove();
+                }
+            } else {
+                it.remove();
+            }
+        }
+    }
 	
 	public static String getAuthor(String name, String locale) {
 		String res;
