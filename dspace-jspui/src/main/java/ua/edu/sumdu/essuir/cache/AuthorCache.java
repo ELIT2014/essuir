@@ -9,7 +9,9 @@ import java.util.*;
 
 import org.dspace.content.DCValue;
 import org.dspace.core.ConfigurationManager;
+import org.dspace.core.Context;
 import org.dspace.discovery.DiscoverResult;
+import org.dspace.storage.rdbms.DatabaseManager;
 
 
 public class AuthorCache {
@@ -81,7 +83,43 @@ public class AuthorCache {
 		
 		return res == null ? name : res;
 	}
-	
+
+    public static void addAuthor(Context context, String[] names) {
+        String surname_uk = names[0].substring(0, names[0].indexOf(','));
+        String initials_uk = names[0].substring(names[0].indexOf(',') + 2);
+        String surname_ru = names[1].substring(0, names[1].indexOf(','));
+        String initials_ru = names[1].substring(names[1].indexOf(',') + 2);
+        String surname_en = names[2].substring(0, names[2].indexOf(','));
+        String initials_en = names[2].substring(names[2].indexOf(',') + 2);
+
+        String query = "INSERT INTO authors (surname_uk, initials_uk, surname_ru, initials_ru, surname_en, initials_en) " +
+                "SELECT * FROM (SELECT '" + surname_uk + "', '" + initials_uk + "', '" + surname_ru + "', '" + initials_ru +
+                "', '" + surname_en + "', '" + initials_en + "') AS tmp " +
+                "WHERE NOT EXISTS (SELECT * FROM authors WHERE surname_en = '" + surname_en +
+                                                        "' AND initials_en = '" + initials_en + "'); COMMIT;";
+
+        try {
+            Connection c = null;
+            try {
+                Class.forName(ConfigurationManager.getProperty("db.driver"));
+
+                c = DriverManager.getConnection(ConfigurationManager.getProperty("db.url"),
+                        ConfigurationManager.getProperty("db.username"),
+                        ConfigurationManager.getProperty("db.password"));
+
+                Statement s = c.createStatement();
+
+                s.executeQuery(query);
+
+                s.close();
+            } finally {
+                if (c != null)
+                    c.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 	
 	public static void checkUpdate() {
 		synchronized(authors) {
