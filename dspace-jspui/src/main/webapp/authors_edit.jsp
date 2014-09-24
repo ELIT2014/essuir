@@ -29,16 +29,23 @@
 <dspace:layout locbar="nolink" title="Authors list" feedData="NONE">
 <form method="get" action="">
   
-<%       
+<%
     String surname = request.getParameter("surname") == null ? "" : request.getParameter("surname").trim();
     String initials = request.getParameter("initials") == null ? "" : request.getParameter("initials").trim();
     String action = request.getParameter("action") == null ? "" : request.getParameter("action").trim();
+    String submit = request.getParameter("submit") == null ? "" : request.getParameter("submit").trim();
     String surname_en = request.getParameter("surname_en") == null ? "" : request.getParameter("surname_en").trim();
     String initials_en = request.getParameter("initials_en") == null ? "" : request.getParameter("initials_en").trim();
     String surname_uk = request.getParameter("surname_uk") == null ? "" : request.getParameter("surname_uk").trim();
     String initials_uk = request.getParameter("initials_uk") == null ? "" : request.getParameter("initials_uk").trim();
     String surname_ru = request.getParameter("surname_ru") == null ? "" : request.getParameter("surname_ru").trim();
     String initials_ru = request.getParameter("initials_ru") == null ? "" : request.getParameter("initials_ru").trim();
+    String old_surname_en = request.getParameter("old_surname_en") == null ? "" : request.getParameter("old_surname_en").trim();
+    String old_initials_en = request.getParameter("old_initials_en") == null ? "" : request.getParameter("old_initials_en").trim();
+    String old_surname_uk = request.getParameter("old_surname_uk") == null ? "" : request.getParameter("old_surname_uk").trim();
+    String old_initials_uk = request.getParameter("old_initials_uk") == null ? "" : request.getParameter("old_initials_uk").trim();
+    String old_surname_ru = request.getParameter("old_surname_ru") == null ? "" : request.getParameter("old_surname_ru").trim();
+    String old_initials_ru = request.getParameter("old_initials_ru") == null ? "" : request.getParameter("old_initials_ru").trim();
 
     // clear input strings
     surname = surname.replace("'", "`");
@@ -49,11 +56,20 @@
     surname_uk = surname_uk.replace("\"", "`");
     surname_ru = surname_ru.replace("'", "`");
     surname_ru = surname_ru.replace("\"", "`");
+    old_surname_en = old_surname_en.replace("'", "`");
+    old_surname_en = old_surname_en.replace("\"", "`");
+    old_surname_uk = old_surname_uk.replace("'", "`");
+    old_surname_uk = old_surname_uk.replace("\"", "`");
+    old_surname_ru = old_surname_ru.replace("'", "`");
+    old_surname_ru = old_surname_ru.replace("\"", "`");
 
     surname = surname.replaceAll("<(.*?)*>", "");
     surname_en = surname_en.replaceAll("<(.*?)*>", "");
     surname_uk = surname_uk.replaceAll("<(.*?)*>", "");
     surname_ru = surname_ru.replaceAll("<(.*?)*>", "");
+    old_surname_en = old_surname_en.replaceAll("<(.*?)*>", "");
+    old_surname_uk = old_surname_uk.replaceAll("<(.*?)*>", "");
+    old_surname_ru = old_surname_ru.replaceAll("<(.*?)*>", "");
 
     initials = initials.replace("'", "`");
     initials = initials.replace("\"", "`");
@@ -63,25 +79,46 @@
     initials_uk = initials_uk.replace("\"", "`");
     initials_ru = initials_ru.replace("'", "`");
     initials_ru = initials_ru.replace("\"", "`");
+    old_initials_en = old_initials_en.replace("'", "`");
+    old_initials_en = old_initials_en.replace("\"", "`");
+    old_initials_uk = old_initials_uk.replace("'", "`");
+    old_initials_uk = old_initials_uk.replace("\"", "`");
+    old_initials_ru = old_initials_ru.replace("'", "`");
+    old_initials_ru = old_initials_ru.replace("\"", "`");
 
     initials = initials.replaceAll("<(.*?)*>", "");
     initials_en = initials_en.replaceAll("<(.*?)*>", "");
     initials_uk = initials_uk.replaceAll("<(.*?)*>", "");
     initials_ru = initials_ru.replaceAll("<(.*?)*>", "");
-
+    old_initials_en = old_initials_en.replaceAll("<(.*?)*>", "");
+    old_initials_uk = old_initials_uk.replaceAll("<(.*?)*>", "");
+    old_initials_ru = old_initials_ru.replaceAll("<(.*?)*>", "");
 
     if (action.equals("update")) {
+
         try {
             String query = "UPDATE authors SET surname_en='" + surname_en + "', initials_en='" + initials_en + 
-                                           "', surname_ru='" + surname_ru + "', initials_ru='" + initials_ru + 
-                                           "', surname_uk='" + surname_uk + "', initials_uk='" + initials_uk + "' " +
-                                           " WHERE surname_en = '" + surname + "' AND initials_en='" + initials + "'; COMMIT; ";
+                   "', surname_ru='" + surname_ru + "', initials_ru='" + initials_ru +
+                   "', surname_uk='" + surname_uk + "', initials_uk='" + initials_uk + "' " +
+                   " WHERE surname_en = '" + old_surname_en + "' AND initials_en='" + old_initials_en + "'; ";
+
+            if (submit.equals("Update and fix")) {
+                query += "UPDATE metadatavalue SET text_value = '" + surname_en + ", " + initials_en +
+                        "' WHERE metadata_field_id = 3 AND text_value = '" + old_surname_en + ", " + old_initials_en + "'; " +
+                        "UPDATE metadatavalue SET text_value = '" + surname_uk + ", " + initials_uk +
+                        "' WHERE metadata_field_id = 3 AND text_value = '" + old_surname_uk + ", " + old_initials_uk + "'; " +
+                        "UPDATE metadatavalue SET text_value = '" + surname_ru + ", " + initials_ru +
+                        "' WHERE metadata_field_id = 3 AND text_value = '" + old_surname_ru + ", " + old_initials_ru + "'; ";
+            }
+
+            query += "COMMIT;";
 
             if (DatabaseManager.updateQuery(context, query) == 1) {
                 %><p>Author updated<br/><%
             } else {
                 %><p>Can't update author!<br/><%
             }
+
         } catch (SQLException e) {
             try {
                 java.io.FileWriter writer = new java.io.FileWriter("D:/projcoder.txt", true);
@@ -164,8 +201,12 @@
 <p>
     <strong>Edit author: </strong><%=surname %>, <%=initials %>
     
-    <input type="hidden" name="surname" value="<%=surname %>"/>
-    <input type="hidden" name="initials" value="<%=initials %>"/>
+    <input type="hidden" name="old_surname_en" value="<%=surname %>"/>
+    <input type="hidden" name="old_initials_en" value="<%=initials %>"/>
+    <input type="hidden" name="old_surname_uk" value="<%=surname_uk %>"/>
+    <input type="hidden" name="old_initials_uk" value="<%=initials_uk %>"/>
+    <input type="hidden" name="old_surname_ru" value="<%=surname_ru %>"/>
+    <input type="hidden" name="old_initials_ru" value="<%=initials_ru %>"/>
     <input type="hidden" name="action" value="update">
 </p>
 <%
@@ -192,7 +233,14 @@
 </table>
 
 <p>
-    <input type="submit" name="submit" value="<%= newAuthor ? " Add author " : " Update author " %>"/>
+    <input type="submit" name="submit" value="<%= newAuthor ? "Add author" : "Update author" %>"/>
+<%
+	if (!newAuthor) {
+%>
+		<input type="submit" name="submit" value="Update and fix"/>
+<%
+	}
+%>
     <input type="button" value="Return back" onClick="history.go(-1)">
 </p>
 
