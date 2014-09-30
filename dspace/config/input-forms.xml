@@ -282,8 +282,8 @@ it, please enter the types and the actual numbers or codes below.</hint>
        <stored-value>Book chapter</stored-value>
      </pair>
      <pair>
-       <displayed-value>РЎompetitive scientific work</displayed-value>
-       <stored-value>РЎompetitive_scientific_work</stored-value>
+       <displayed-value>Competitive scientific work</displayed-value>
+       <stored-value>Competitive_scientific_work</stored-value>
      </pair>
      <pair>
        <displayed-value>Dataset</displayed-value>
@@ -387,18 +387,30 @@ it, please enter the types and the actual numbers or codes below.</hint>
        <displayed-value>N/A</displayed-value>
        <stored-value></stored-value>
      </pair>
+	 <pair>
+       <displayed-value>Ukrainian</displayed-value>
+       <stored-value>uk</stored-value>
+     </pair>
      <pair>
+       <displayed-value>Russian</displayed-value>
+       <stored-value>ru</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Polish</displayed-value>
+       <stored-value>pl</stored-value>
+     </pair>
+     <!-- <pair>
        <displayed-value>English (United States)</displayed-value>
        <stored-value>en_US</stored-value>
-      </pair>
+      </pair> -->
      <pair>
        <displayed-value>English</displayed-value>
        <stored-value>en</stored-value>
      </pair>
-     <pair>
+     <!-- <pair>
        <displayed-value>Spanish</displayed-value>
        <stored-value>es</stored-value>
-     </pair>
+     </pair> -->
      <pair>
        <displayed-value>German</displayed-value>
        <stored-value>de</stored-value>
@@ -407,14 +419,14 @@ it, please enter the types and the actual numbers or codes below.</hint>
        <displayed-value>French</displayed-value>
        <stored-value>fr</stored-value>
      </pair>
-     <pair>
+     <!-- <pair>
        <displayed-value>Italian</displayed-value>
        <stored-value>it</stored-value>
-     </pair>
+     </pair> 
      <pair>
        <displayed-value>Japanese</displayed-value>
        <stored-value>ja</stored-value>
-     </pair>
+     </pair> 
      <pair>
        <displayed-value>Chinese</displayed-value>
        <stored-value>zh</stored-value>
@@ -422,7 +434,7 @@ it, please enter the types and the actual numbers or codes below.</hint>
      <pair>
        <displayed-value>Turkish</displayed-value>
        <stored-value>tr</stored-value>
-     </pair>
+     </pair>-->
      <pair>
        <displayed-value>(Other)</displayed-value>
        <stored-value>other</stored-value>

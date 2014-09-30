@@ -124,15 +124,15 @@
                         java.util.StringTokenizer tokens = new java.util.StringTokenizer(type);
 
                         while (tokens.hasMoreTokens()) {
-                            query += " AND (type%3A" + tokens.nextToken() + ")";
+                            query += "+" + tokens.nextToken();
                         }
 
                         if (query.length() > 0)
-                            query = query.substring(5);
+                            query = query.substring(1);
 
                 %>
                 <td class="standard" width="25%">
-                    <a href="<%= request.getContextPath() %>/simple-search?query=(<%= query %>)"><%= typeLocale %></a>
+                    <a href="<%= request.getContextPath() %>/simple-search?query=&filtername=type&filtertype=equals&filterquery=<%= query %>&rpp=20&sort_by=dc.date.issued_dt&order=desc"><%= typeLocale %></a>
                     <%
                     %>
                     <span class="badge"><%= types.get(type) %></span>
