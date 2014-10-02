@@ -34,11 +34,12 @@
 	String locale = sessionLocale.toString();
 
 	java.util.ArrayList<ua.edu.sumdu.essuir.AuthorStatInfo> authors = ua.edu.sumdu.essuir.AuthorManager.getTop10Author(locale);
-	
+
+    int i = 1;
 	for(ua.edu.sumdu.essuir.AuthorStatInfo author : authors) {
 	     %>
 	     <tr height="30">
-	     	<td><a href="/browse?type=author&value=<%= author.getName() %>"><%= author.getName() %></a></td>
+	     	<td><a href="/browse?type=author&value=<%= author.getName() %>"><%= i %>. <%= author.getName() %></a></td>
 	     	<td align="center"><%= author.getDownloads() %></td>
 	     </tr>
 	     
@@ -47,6 +48,8 @@
 	     </tr>
 		
      	<%
+        i++;
+        if (i == 11) break;
 	}
 %>
 </table>

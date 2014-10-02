@@ -55,6 +55,7 @@
 		        long downloads;
 		        String url;
 		        String title;
+                int i = 1;
 		        while (res.next()) {
 		            item_id = res.getInt("item_id");
 		            url = res.getString("text_value");
@@ -67,7 +68,7 @@
 		            
 		            %>
 		            <tr height="30">
-		            	<td><a href="<%= url %>"><%= title %></a></td>
+		            	<td><a href="<%= url %>"><%= i %>. <%= title %></a></td>
 		            	<td align="center"><%= downloads %></td>
 		            </tr>
 		            
@@ -76,6 +77,7 @@
 		            </tr>
 		            
 		            <%
+                    i++;
 		        }
 		
 		        s.close();
