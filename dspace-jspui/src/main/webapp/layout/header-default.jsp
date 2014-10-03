@@ -47,6 +47,8 @@
 <head>
     <title><%= siteName %>: <%= title %></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="google-site-verification" content="tTn05lesh9UKz23565jHK5aTIUMwzt23m8QKeNvGpPI" />
+    <meta name="msvalidate.01" content="CD5A7A6FF650F11BD18F1D35D7AF4B77" />
     <meta name="Generator" content="<%= generator %>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="<%= request.getContextPath() %>/favicon.ico" type="image/x-icon"/>
@@ -86,32 +88,30 @@
     <script type="text/javascript" src="<%= request.getContextPath() %>/utils.js"></script>
     <script type="text/javascript" src="<%= request.getContextPath() %>/static/js/choice-support.js"> </script>
 
-    <%--Gooogle Analytics recording.--%>
-    <%
-        if (analyticsKey != null && analyticsKey.length() > 0)
-        {
-    %>
+    <!-- Google Analytics -->
     <script type="text/javascript">
+
         var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '<%= analyticsKey %>']);
+        _gaq.push(['_setAccount', 'UA-24290191-2']);
         _gaq.push(['_trackPageview']);
 
         (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            var ga = document.createElement('script'); ga.type = 'text/javascript';
+            ga.async = true;
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
         })();
+
     </script>
+
     <%
-        }
         if (extraHeadDataLast != null)
         { %>
     <%= extraHeadDataLast %>
     <%
         }
     %>
-
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="<%= request.getContextPath() %>/static/js/html5shiv.js"></script>
