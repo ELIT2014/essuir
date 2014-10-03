@@ -95,6 +95,13 @@ public abstract class AbstractBrowserServlet extends DSpaceServlet
             int sortBy = UIUtil.getIntParameter(request, "sort_by");
             int etAl = UIUtil.getIntParameter(request, "etal");
 
+            // Sort authors by issue date by default
+            String submitBrowse = request.getParameter("submit_browse");
+            if (type.equals("author") && (submitBrowse == null || submitBrowse.equals(""))) {
+                sortBy = 2;
+                order = "DESC";
+            }
+
             // get the community or collection location for the browse request
             // Note that we are only interested in getting the "smallest" container,
             // so if we find a collection, we don't bother looking up the community
@@ -183,6 +190,10 @@ public abstract class AbstractBrowserServlet extends DSpaceServlet
                     {
                         month = Integer.toString((Integer.parseInt(month) - 1));
                     }
+                    else
+                    {
+                        month = Integer.toString((Integer.parseInt(month) + 1));
+                    }
 
                     // They've selected a month as well
                     if (month.length() == 1)
@@ -197,6 +208,32 @@ public abstract class AbstractBrowserServlet extends DSpaceServlet
                     {
                         startsWith = startsWith + "-32";
                     }
+                }
+                else if ("DESC".equals(order))
+                {
+                    startsWith = Integer.toString((Integer.parseInt(startsWith) + 1));
+                }
+                else
+                {
+                    startsWith = Integer.toString((Integer.parseInt(startsWith) - 1));
+                    startsWith = startsWith + "-12-32";
+                }
+            }
+            else if ("DESC".equals(order))
+            {
+                try {
+                    startsWith = Integer.toString((Integer.parseInt(startsWith) + 1));
+                } catch (Exception e) {
+
+                }
+            }
+            else
+            {
+                try {
+                    startsWith = Integer.toString((Integer.parseInt(startsWith) - 1));
+                    startsWith = startsWith + "-12-32";
+                } catch (Exception e) {
+
                 }
             }
 
