@@ -1064,19 +1064,6 @@
                 fieldParam = fieldName;
             }
 
-            sb.append("<div class=\"row col-md-12\">");
-
-            if(i != fieldCount)
-            {
-                //param is field name and index, starting from 1 (e.g. myfield_2)
-                fieldParam = fieldName + "_" + (i+1);
-            }
-            else
-            {
-                //param is just the field name
-                fieldParam = fieldName;
-            }
-
             if (i < defaults.length)
             {
                 sb.append("<span class=\"col-md-2\"><input class=\"form-control\" type=\"text\" name=\"")
