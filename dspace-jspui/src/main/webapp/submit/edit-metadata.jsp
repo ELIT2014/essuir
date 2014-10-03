@@ -970,7 +970,199 @@
         out.write(sb.toString());
     }
 
+    void doThreeLocBox(javax.servlet.jsp.JspWriter out, Item item,
+                  String fieldName, String schema, String element, String qualifier, boolean repeatable, boolean required, boolean readonly,
+                  int fieldCountIncr, String label, PageContext pageContext, String vocabulary, boolean closedVocabulary)
+            throws java.io.IOException
+    {
+        DCValue[] defaults = item.getMetadata(schema, element, qualifier, Item.ANY);
+        int fieldCount = defaults.length + fieldCountIncr;
+        StringBuffer sb = new StringBuffer();
+        StringBuffer headers = new StringBuffer();
 
+        String fieldParam = "";
+
+        if (fieldCount == 0)
+            fieldCount = 1;
+
+        fieldCount = (fieldCount / 3 + (fieldCount % 3 == 0 ? 0 : 1)) * 3;
+
+        sb.append("<div class=\"row\"><label class=\"col-md-2"+ (required?" label-required":"") +"\">")
+                .append(label)
+                .append("</label>");
+        sb.append("<div class=\"col-md-10\">");
+        sb.append("<div class=\"row col-md-12\"><div class=\"col-md-4\"><label>");
+        sb.append(LocaleSupport.getLocalizedMessage(pageContext, "jsp.submit.edit-metadata.locale_uk"));
+        sb.append("</label></div><div class=\"col-md-4\"><label>");
+        sb.append(LocaleSupport.getLocalizedMessage(pageContext, "jsp.submit.edit-metadata.locale_ru"));
+        sb.append("</label></div><div class=\"col-md-4\"><label>");
+        sb.append(LocaleSupport.getLocalizedMessage(pageContext, "jsp.submit.edit-metadata.locale_en"));
+        sb.append("</label></div></div>");
+        for (int i = 0; i < fieldCount; i++)
+        {
+            sb.append("<div class=\"row col-md-12\">");
+
+            if(i != fieldCount)
+            {
+                //param is field name and index, starting from 1 (e.g. myfield_2)
+                fieldParam = fieldName + "_" + (i+1);
+            }
+            else
+            {
+                //param is just the field name
+                fieldParam = fieldName;
+            }
+
+            if (i < defaults.length)
+            {
+                sb.append("<span class=\"col-md-2\"><input class=\"form-control\" type=\"text\" name=\"")
+                        .append(fieldParam)
+                        .append("\" size=\"15\" value=\"")
+                        .append(defaults[i].value.replaceAll("\"", "&quot;"))
+                        .append("\"")
+                        .append((hasVocabulary(vocabulary)&&closedVocabulary) || readonly?" disabled=\"disabled\" ":"")
+                        .append("\" />");
+
+                sb.append(doControlledVocabulary(fieldParam, pageContext, vocabulary, readonly));
+                sb.append("</span>");
+                if (!readonly)
+                {
+                    sb.append("<button class=\"btn btn-danger col-md-2\" name=\"submit_")
+                            .append(fieldName)
+                            .append("_remove_")
+                            .append(i)
+                            .append("\" value=\"")
+                            .append(LocaleSupport.getLocalizedMessage(pageContext, "jsp.submit.edit-metadata.button.remove2"))
+                            .append("\"><span class=\"glyphicon glyphicon-trash\"></span>&nbsp;&nbsp;"+LocaleSupport.getLocalizedMessage(pageContext, "jsp.submit.edit-metadata.button.remove")+"</button>");
+                }
+                else {
+                    sb.append("<span class=\"col-md-2\">&nbsp;</span>");
+                }
+            }
+            else
+            {
+                sb.append("<span class=\"col-md-2\"><input class=\"form-control\" type=\"text\" name=\"")
+                        .append(fieldParam)
+                        .append("\" size=\"15\"")
+                        .append((hasVocabulary(vocabulary)&&closedVocabulary) || readonly?" disabled=\"disabled\" ":"")
+                        .append("/>")
+                        .append(doControlledVocabulary(fieldParam, pageContext, vocabulary, readonly))
+                        .append("</span>\n")
+                        .append("<span class=\"col-md-2\">&nbsp;</span>");
+            }
+
+            i++;
+
+            if(i != fieldCount)
+            {
+                //param is field name and index, starting from 1 (e.g. myfield_2)
+                fieldParam = fieldName + "_" + (i+1);
+            }
+            else
+            {
+                //param is just the field name
+                fieldParam = fieldName;
+            }
+
+            if (i < defaults.length)
+            {
+                sb.append("<span class=\"col-md-2\"><input class=\"form-control\" type=\"text\" name=\"")
+                        .append(fieldParam)
+                        .append("\" size=\"15\" value=\"")
+                        .append(defaults[i].value.replaceAll("\"", "&quot;"))
+                        .append("\"")
+                        .append((hasVocabulary(vocabulary)&&closedVocabulary) || readonly?" disabled=\"disabled\" ":"")
+                        .append("\" />");
+
+                sb.append(doControlledVocabulary(fieldParam, pageContext, vocabulary, readonly));
+                sb.append("</span>");
+                if (!readonly)
+                {
+                    sb.append("<button class=\"btn btn-danger col-md-2\" name=\"submit_")
+                            .append(fieldName)
+                            .append("_remove_")
+                            .append(i)
+                            .append("\" value=\"")
+                            .append(LocaleSupport.getLocalizedMessage(pageContext, "jsp.submit.edit-metadata.button.remove2"))
+                            .append("\"><span class=\"glyphicon glyphicon-trash\"></span>&nbsp;&nbsp;"+LocaleSupport.getLocalizedMessage(pageContext, "jsp.submit.edit-metadata.button.remove")+"</button>");
+                }
+                else {
+                    sb.append("<span class=\"col-md-2\">&nbsp;</span>");
+                }
+            }
+            else
+            {
+                sb.append("<span class=\"col-md-2\"><input class=\"form-control\" type=\"text\" name=\"")
+                        .append(fieldParam)
+                        .append("\" size=\"15\"")
+                        .append((hasVocabulary(vocabulary)&&closedVocabulary) || readonly?" disabled=\"disabled\" ":"")
+                        .append("/>")
+                        .append(doControlledVocabulary(fieldParam, pageContext, vocabulary, readonly))
+                        .append("</span>\n")
+                        .append("<span class=\"col-md-2\">&nbsp;</span>");
+            }
+
+            i++;
+
+            if(i != fieldCount)
+            {
+                //param is field name and index, starting from 1 (e.g. myfield_2)
+                fieldParam = fieldName + "_" + (i+1);
+            }
+            else
+            {
+                //param is just the field name
+                fieldParam = fieldName;
+            }
+
+            if (i < defaults.length)
+            {
+                sb.append("<span class=\"col-md-2\"><input class=\"form-control\" type=\"text\" name=\"")
+                        .append(fieldParam)
+                        .append("\" size=\"15\" value=\"")
+                        .append(defaults[i].value.replaceAll("\"", "&quot;"))
+                        .append("\"")
+                        .append((hasVocabulary(vocabulary)&&closedVocabulary) || readonly?" disabled=\"disabled\" ":"")
+                        .append("/>");
+                sb.append(doControlledVocabulary(fieldParam, pageContext, vocabulary, readonly));
+                sb.append("</span>");
+                if (!readonly)
+                {
+                    sb.append(" <button class=\"btn btn-danger col-md-2\" name=\"submit_")
+                            .append(fieldName)
+                            .append("_remove_")
+                            .append(i)
+                            .append("\" value=\"")
+                            .append(LocaleSupport.getLocalizedMessage(pageContext, "jsp.submit.edit-metadata.button.remove2"))
+                            .append("\"><span class=\"glyphicon glyphicon-trash\"></span>&nbsp;&nbsp;"+LocaleSupport.getLocalizedMessage(pageContext, "jsp.submit.edit-metadata.button.remove")+"</button>");
+                }
+                else {
+                    sb.append("<span class=\"col-md-2\">&nbsp;</span>");
+                }
+            }
+            else
+            {
+                sb.append("<span class=\"col-md-2\"><input class=\"form-control\" type=\"text\" name=\"")
+                        .append(fieldParam)
+                        .append("\" size=\"15\"")
+                        .append((hasVocabulary(vocabulary)&&closedVocabulary)||readonly?" disabled=\"disabled\" ":"")
+                        .append("/>")
+                        .append(doControlledVocabulary(fieldParam, pageContext, vocabulary, readonly))
+                        .append("</span>\n");
+                if (i+1 >= fieldCount && !readonly)
+                {
+                    sb.append(" <button class=\"btn btn-default col-md-2\" name=\"submit_")
+                            .append(fieldName)
+                            .append("_add\" value=\"")
+                            .append(LocaleSupport.getLocalizedMessage(pageContext, "jsp.submit.edit-metadata.button.add"))
+                            .append("\"><span class=\"glyphicon glyphicon-plus\"></span>&nbsp;&nbsp;"+LocaleSupport.getLocalizedMessage(pageContext, "jsp.submit.edit-metadata.button.add")+"</button>\n");
+                }
+            }
+            sb.append("</div>");
+        }
+        sb.append("</div></div><br/>");
+        out.write(sb.toString());
+    }
 
     void doQualdropValue(javax.servlet.jsp.JspWriter out, Item item,
                          String fieldName, String schema, String element, DCInputSet inputs, boolean repeatable, boolean required,
@@ -1477,6 +1669,12 @@ else
         else if (inputType.equals("twobox"))
         {
             doTwoBox(out, item, fieldName, dcSchema, dcElement, dcQualifier,
+                    repeatable, required, readonly, fieldCountIncr, label, pageContext,
+                    vocabulary, closedVocabulary);
+        }
+        else if (inputType.equals("threelocbox"))
+        {
+            doThreeLocBox(out, item, fieldName, dcSchema, dcElement, dcQualifier,
                     repeatable, required, readonly, fieldCountIncr, label, pageContext,
                     vocabulary, closedVocabulary);
         }

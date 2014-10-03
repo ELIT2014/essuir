@@ -106,29 +106,6 @@
 
        <field>
 		 <dc-schema>dc</dc-schema>
-         <dc-element>relation</dc-element>
-         <dc-qualifier>ispartofseries</dc-qualifier>
-         <repeatable>true</repeatable>
-         <label>Серія/номер</label>
-         <input-type>series</input-type>
-         <hint>Номер тома/випуску.</hint>
-         <required></required>
-       </field>
-
-       <field>
-		 <dc-schema>dc</dc-schema>
-         <dc-element>identifier</dc-element>
-         <dc-qualifier></dc-qualifier>
-         <!-- An input-type of qualdrop_value MUST be marked as repeatable -->
-         <repeatable>true</repeatable>
-         <label>Ідентифікатори</label>
-         <input-type value-pairs-name="common_identifiers">qualdrop_value</input-type>
-         <hint>Введіть ідентифікаційний номер(якщо є).</hint>
-         <required></required>
-       </field>
-
-       <field>
-		 <dc-schema>dc</dc-schema>
          <dc-element>type</dc-element>
          <dc-qualifier></dc-qualifier>
          <repeatable>true</repeatable>
@@ -159,7 +136,7 @@
          <!-- An input-type of twobox MUST be marked as repeatable -->
          <repeatable>true</repeatable>
          <label>Тематика і ключові слова</label>
-         <input-type>twobox</input-type>
+         <input-type>threelocbox</input-type>
          <hint>Введіть нижче відповідні матеріалу ключові слова та тематичні рубрики. </hint>
          <required></required>
          <vocabulary>srsc</vocabulary>
