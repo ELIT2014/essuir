@@ -410,7 +410,8 @@ public class ItemListTag extends TagSupport
             String[] types = new String[items.length];
             for (int i = 0; i < ids.length; i++) {
                 ids[i] = items[i].getID();
-                types[i] = ItemTag.getTypeLocalized(items[i].getMetadata("dc", "type", Item.ANY, Item.ANY)[0].value, locale);
+                DCValue[] itemType = items[i].getMetadata("dc", "type", Item.ANY, Item.ANY);
+                types[i] = (itemType.length == 0) ? "" : ItemTag.getTypeLocalized(itemType[0].value, locale);
             }
 
             // statistics
