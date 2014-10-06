@@ -97,7 +97,7 @@ public abstract class AbstractBrowserServlet extends DSpaceServlet
 
             // Sort authors by issue date by default
             String submitBrowse = request.getParameter("submit_browse");
-            if (type.equals("author") && (submitBrowse == null || submitBrowse.equals(""))) {
+            if (type.equals("author") && value != null && !value.equals("") && (submitBrowse == null || submitBrowse.equals(""))) {
                 sortBy = 2;
                 order = "DESC";
             }
