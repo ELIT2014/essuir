@@ -108,6 +108,33 @@
     // Admin user or not
     Boolean admin_b = (Boolean)request.getAttribute("admin_button");
     boolean admin_button = (admin_b == null ? false : admin_b.booleanValue());
+
+    java.util.Locale sessionLocale = org.dspace.app.webui.util.UIUtil.getSessionLocale(request);
+    String locale = sessionLocale.toString();
+    java.util.List codesList = org.dspace.app.util.DCInputsReader.getInputsReader(locale).getPairs("common_iso_languages");
+
+    StringBuilder langList = new StringBuilder();
+
+    for (int i = 0; i < codesList.size(); i += 2) {
+        langList.append("<option value=\\\"")
+                .append(codesList.get(i + 1))
+                .append("\\\">")
+                .append(codesList.get(i))
+                .append("</option>");
+    }
+
+    codesList = org.dspace.app.util.DCInputsReader.getInputsReader(locale).getPairs("common_types");
+
+    StringBuilder typeList = new StringBuilder();
+
+    for (int i = 0; i < codesList.size(); i += 2) {
+        typeList.append("<option value=\\\"")
+                .append(codesList.get(i + 1))
+                .append("\\\">")
+                .append(codesList.get(i))
+                .append("</option>");
+    }
+
 %>
 
 <c:set var="dspace.layout.head.last" scope="request">
@@ -148,144 +175,20 @@
                             })
                         }
                     });
+            jQ("#filtername").change(function() {
+                var activeType = jQ("#filtername").val();
+                if (activeType == 'language') {
+                    document.getElementById("filterqueryfield").innerHTML = "<select name=\"filterquery\" style=\"width:349px;\"><%= langList.toString() %></select>";
+                } else if (activeType == 'type') {
+                    document.getElementById("filterqueryfield").innerHTML = "<select name=\"filterquery\" style=\"width:349px;\"><%= typeList.toString() %></select>";
+                } else {
+                    document.getElementById("filterqueryfield").innerHTML = "<input type=\"text\" id=\"filterquery\" name=\"filterquery\" size=\"45\" required=\"required\" />";
+                }
+            });
         });
+
         function validateFilters() {
             return document.getElementById("filterquery").value.length > 0;
-        }
-    </script>
-
-    <style type="text/css">
-        .ac_over {
-            background-color: Highlight;
-            color: HighlightText;
-        }
-        .ac_results {
-            padding: 0px;
-            border: 1px solid WindowFrame;
-            background-color: Window;
-            overflow: hidden;
-        }
-        .ac_results ul {
-            width: 100%;
-            list-style-position: outside;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .ac_results li {
-            position: relative;
-            margin: 0px;
-            padding: 2px 5px;
-            cursor: pointer;
-            display: block;
-            width: 100%;
-            font: menu;
-            font-size: 12px;
-            overflow: hidden;
-        }
-        .ac_loading {
-            background: Window url('autocomplete_indicator.gif') right center no-repeat;
-        }
-    </style>
-    <script type="text/javascript" src="jquery-1.5.1.min.js"></script>
-    <script type='text/javascript' src='jquery.autocomplete.js'></script>
-
-    <script type="text/javascript">
-        var active1 = false;
-        var active2 = false;
-        var table = new Array();
-        var typeTable = new Array();
-
-        <%
-
-        java.util.Locale sessionLocale = org.dspace.app.webui.util.UIUtil.getSessionLocale(request);
-        String locale = sessionLocale.toString();
-        java.util.List codesList = org.dspace.app.util.DCInputsReader.getInputsReader(locale).getPairs("common_iso_languages");
-
-        java.util.ArrayList<String> dataList = new ArrayList<String>();
-        StringBuilder tableList = new StringBuilder();
-
-        for (int i = 0; i < codesList.size(); i += 2) {
-            dataList.add("\"" + codesList.get(i) + "\"");
-
-            tableList.append("table[\"" + codesList.get(i) + "\"]=\"" + codesList.get(i + 1) + "\";\n");
-        }
-
-        %>
-
-        var data = <%=dataList.toString()%>;
-
-        <%=tableList.toString()%>
-
-        <%
-        codesList = org.dspace.app.util.DCInputsReader.getInputsReader(locale).getPairs("common_types");
-
-        dataList = new ArrayList<String>();
-        tableList = new StringBuilder();
-
-        for (int i = 0; i < codesList.size(); i += 2) {
-            dataList.add("\"" + codesList.get(i) + "\"");
-
-            tableList.append("typeTable[\"" + codesList.get(i) + "\"]=\"" + codesList.get(i + 1) + "\";\n");
-        }
-        %>
-
-        var typeData = <%=dataList.toString()%>;
-
-        <%=tableList.toString()%>
-
-        $(document).ready(function() {
-            setAutocomplete("#filterquery", selectItem1, isActive1, formatItem1, data);
-            setAutocomplete("#filterquery", selectItem2, isActive2, formatItem2, typeData);
-        });
-
-        function selectItem1(li) {
-            $("#filterquery").val(table[li.selectValue]);
-        }
-
-        function setActive1(newActive) {
-            active1 = newActive;
-        }
-
-        function isActive1() {
-            return active1;
-        }
-
-        function selectItem2(li) {
-            $("#filterquery").val(typeTable[li.selectValue]);
-        }
-
-        function setActive2(newActive) {
-            active2 = newActive;
-        }
-
-        function isActive2() {
-            return active2;
-        }
-
-        function formatItem1(row) {
-            var code = table[row[0]];
-            return "<img src=\"flags/country_flag_" + code + ".png\" alt=\"country flag\"/> " + row[0];
-        }
-
-        function formatItem2(row) {
-            return row[0];
-        }
-
-        function setAutocomplete(input, selectFunc, activeFunc, formatItem, data) {
-            $(input).autocompleteArray(
-                    data,
-                    {
-                        delay:10,
-                        active: activeFunc,
-                        minChars:0,
-                        matchSubset:1,
-                        formatItem: formatItem,
-                        onItemSelect: selectFunc,
-                        autoFill: true,
-                        maxItemsToShow: 10
-                    }
-            );
         }
 
     </script>
@@ -407,7 +310,7 @@
                     idx++;
                 }
             } %>
-        <select id="filtername" name="filtername" onchange="setActive1(value == 'language');setActive2(value == 'type');">
+        <select id="filtername" name="filtername">
             <%
                 for (DiscoverySearchFilter searchFilter : availableFilters)
                 {
@@ -425,7 +328,7 @@
             }
         %>
         </select>
-        <input type="text" id="filterquery" name="filterquery" size="45" required="required" />
+        <span id="filterqueryfield"><input type="text" id="filterquery" name="filterquery" size="45" required="required" /></span>
         <input type="hidden" value="<%= rpp %>" name="rpp" />
         <input type="hidden" value="<%= sortedBy %>" name="sort_by" />
         <input type="hidden" value="<%= order %>" name="order" />
