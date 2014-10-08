@@ -140,7 +140,7 @@
 <c:set var="dspace.layout.head.last" scope="request">
     <script type="text/javascript">
         var jQ = jQuery.noConflict();
-        jQ(document).ready(function() {
+        function go() {
             jQ( "#spellCheckQuery").click(function(){
                 jQ("#query").val(jQ(this).attr('data-spell'));
                 jQ("#main-query-submit").click();
@@ -183,9 +183,11 @@
                     document.getElementById("filterqueryfield").innerHTML = "<select name=\"filterquery\" style=\"width:349px;\"><%= typeList.toString() %></select>";
                 } else {
                     document.getElementById("filterqueryfield").innerHTML = "<input type=\"text\" id=\"filterquery\" name=\"filterquery\" size=\"45\" required=\"required\" />";
+                    go();
                 }
             });
-        });
+        }
+        jQ(document).ready(go);
 
         function validateFilters() {
             return document.getElementById("filterquery").value.length > 0;
