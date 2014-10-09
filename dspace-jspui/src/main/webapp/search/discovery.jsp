@@ -103,7 +103,7 @@
     int rpp          = qArgs.getMaxResults();
     int etAl         = ((Integer) request.getAttribute("etal")).intValue();
 
-    String[] options = new String[]{"equals","contains","authority","notequals","notcontains","notauthority"};
+    String[] options = new String[]{"equals","contains","notequals","notcontains"};
 
     // Admin user or not
     Boolean admin_b = (Boolean)request.getAttribute("admin_button");
@@ -232,9 +232,7 @@
                 <%= dso.getName() %></option>
             <%
                 }
-            %>                                </select><br/>
-        <label for="query"><fmt:message key="jsp.search.results.searchfor"/></label>
-        <input type="text" size="50" id="query" name="query" value="<%= (query==null ? "" : StringEscapeUtils.escapeHtml(query)) %>"/>
+            %>                                </select>
         <input type="submit" id="main-query-submit" class="btn btn-primary" value="<fmt:message key="jsp.general.go"/>" />
         <% if (StringUtils.isNotBlank(spellCheckQuery)) {%>
         <p class="lead"><fmt:message key="jsp.search.didyoumean"><fmt:param><a id="spellCheckQuery" data-spell="<%= StringEscapeUtils.escapeHtml(spellCheckQuery) %>" href="#"><%= spellCheckQuery %></a></fmt:param></fmt:message></p>
@@ -251,7 +249,7 @@
                 {
                     boolean found = false;
             %>
-            <select id="filter_field_<%=idx %>" name="filter_field_<%=idx %>">
+            <select id="filter_field_<%=idx %>" name="filter_field_<%=idx %>" disabled>
                 <%
                     for (DiscoverySearchFilter searchFilter : availableFilters)
                     {
@@ -271,7 +269,7 @@
                 }
             %>
             </select>
-            <select id="filter_type_<%=idx %>" name="filter_type_<%=idx %>">
+            <select id="filter_type_<%=idx %>" name="filter_type_<%=idx %>" disabled>
                 <%
                     for (String opt : options)
                     {
@@ -280,7 +278,7 @@
                 }
             %>
             </select>
-            <input type="text" id="filter_value_<%=idx %>" name="filter_value_<%=idx %>" value="<%= StringEscapeUtils.escapeHtml(filter[2]) %>" size="45"/>
+            <input type="text" id="filter_value_<%=idx %>" name="filter_value_<%=idx %>" value="<%= StringEscapeUtils.escapeHtml(filter[2]) %>" size="45" readonly/>
             <input class="btn btn-default" type="submit" id="submit_filter_remove_<%=idx %>" name="submit_filter_remove_<%=idx %>" value="X" />
             <br/>
             <%
