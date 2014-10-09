@@ -123,42 +123,43 @@
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <fmt:message key="jsp.layout.navbar-default.loggedin">
 		      <fmt:param><%= StringUtils.abbreviate(navbarEmail, 35) %></fmt:param>
 		  </fmt:message> <b class="caret"></b></a>
+             <ul class="dropdown-menu">
+                 <li><a href="<%= request.getContextPath() %>/mydspace"><fmt:message key="jsp.layout.navbar-default.users"/></a></li>
+                 <li><a href="<%= request.getContextPath() %>/subscribe"><fmt:message key="jsp.layout.navbar-default.receive"/></a></li>
+                 <li><a href="<%= request.getContextPath() %>/profile"><fmt:message key="jsp.layout.navbar-default.edit"/></a></li>
+
+                 <%
+                     String userEmail = "";
+
+                     if (user != null)
+                         userEmail = user.getEmail().toLowerCase();
+
+                     if (isAdmin || userEmail.equals("library_ssu@ukr.net") || userEmail.equals("libconsult@rambler.ru")) {
+                 %>
+                 <li class="divider"></li>
+                 <li><a href="<%= request.getContextPath() %>/home_stat.jsp"><fmt:message key="jsp.layout.navbar-admin.report"/></a></li>
+                 <li><a href="<%= request.getContextPath() %>/authors.jsp"><fmt:message key="jsp.layout.navbar-admin.autocomplete"/></a></li>
+                 <li><a href="<%= request.getContextPath() %>/upload/manage.jsp"><fmt:message key="jsp.layout.navbar-admin.remote"/></a></li>
+                 <%
+                     }
+                     if (isAdmin)
+                     {
+                 %>
+                 <li class="divider"></li>
+                 <li><a href="<%= request.getContextPath() %>/dspace-admin"><fmt:message key="jsp.administer"/></a></li>
+                 <%
+                     }
+                     if (user != null) {
+                 %>
+                 <li><a href="<%= request.getContextPath() %>/logout"><span class="glyphicon glyphicon-log-out"></span> <fmt:message key="jsp.layout.navbar-default.logout"/></a></li>
+                 <% } %>
+             </ul>
 		<%
     } else {
 		%>
-             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <fmt:message key="jsp.layout.navbar-default.sign"/> <b class="caret"></b></a>
+             <a href="/password-login"><span class="glyphicon glyphicon-user"></span> <fmt:message key="jsp.layout.navbar-default.sign"/> </a>
 	<% } %>             
-             <ul class="dropdown-menu">
-               <li><a href="<%= request.getContextPath() %>/mydspace"><fmt:message key="jsp.layout.navbar-default.users"/></a></li>
-               <li><a href="<%= request.getContextPath() %>/subscribe"><fmt:message key="jsp.layout.navbar-default.receive"/></a></li>
-               <li><a href="<%= request.getContextPath() %>/profile"><fmt:message key="jsp.layout.navbar-default.edit"/></a></li>
 
-		<%
-				   String userEmail = "";
-
-		   if (user != null)
-			   userEmail = user.getEmail().toLowerCase();
-
-		   if (isAdmin || userEmail.equals("library_ssu@ukr.net") || userEmail.equals("libconsult@rambler.ru")) {
-		%>
-			   <li class="divider"></li>
-			   <li><a href="<%= request.getContextPath() %>/home_stat.jsp"><fmt:message key="jsp.layout.navbar-admin.report"/></a></li>
-			   <li><a href="<%= request.getContextPath() %>/authors.jsp"><fmt:message key="jsp.layout.navbar-admin.autocomplete"/></a></li>
-			   <li><a href="<%= request.getContextPath() %>/upload/manage.jsp"><fmt:message key="jsp.layout.navbar-admin.remote"/></a></li>
-		<%
-		  }
-		  if (isAdmin)
-		  {
-		%>
-			   <li class="divider"></li>  
-               <li><a href="<%= request.getContextPath() %>/dspace-admin"><fmt:message key="jsp.administer"/></a></li>
-		<%
-		  }
-		  if (user != null) {
-		%>
-		<li><a href="<%= request.getContextPath() %>/logout"><span class="glyphicon glyphicon-log-out"></span> <fmt:message key="jsp.layout.navbar-default.logout"/></a></li>
-		<% } %>
-             </ul>
            </li>
           </ul>
           
