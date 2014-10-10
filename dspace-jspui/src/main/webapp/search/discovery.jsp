@@ -276,9 +276,15 @@
                         String fkey = "jsp.search.filter.op."+opt;
                 %><option value="<%= opt %>"<%= opt.equals(filter[1])?" selected=\"selected\"":"" %>><fmt:message key="<%= fkey %>"/></option><%
                 }
+                String filterValue = StringEscapeUtils.escapeHtml(filter[2]);
+                if (filter[0].equals("type")) {
+                    filterValue = org.dspace.app.webui.jsptag.ItemTag.getTypeLocalized(StringEscapeUtils.escapeHtml(filterValue), locale);
+                } else if (filter[0].equals("language")) {
+                    filterValue = org.dspace.app.webui.jsptag.ItemTag.getLanguageLocalized(StringEscapeUtils.escapeHtml(filterValue), locale);
+                }
             %>
             </select>
-            <input type="text" id="filter_value_<%=idx %>" name="filter_value_<%=idx %>" value="<%= StringEscapeUtils.escapeHtml(filter[2]) %>" size="45" readonly/>
+            <input type="text" id="filter_value_<%=idx %>" name="filter_value_<%=idx %>" value="<%= filterValue %>" size="45" readonly/>
             <input class="btn btn-default" type="submit" id="submit_filter_remove_<%=idx %>" name="submit_filter_remove_<%=idx %>" value="X" />
             <br/>
             <%
@@ -787,4 +793,3 @@ else if( qResults != null)
     <% } %>
 </dspace:sidebar>
 </dspace:layout>
-
