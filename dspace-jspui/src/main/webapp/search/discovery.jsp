@@ -293,7 +293,7 @@
             %>
         </div>
         <% } %>
-        <a class="btn btn-default" href="<%= request.getContextPath()+"/simple-search" %>"><fmt:message key="jsp.search.general.new-search" /></a>
+        <a class="btn btn-default" href="<%= request.getContextPath()+"/simple-search?rpp=20" %>"><fmt:message key="jsp.search.general.new-search" /></a>
     </form>
 </div>
 <% if (availableFilters.size() > 0) { %>
