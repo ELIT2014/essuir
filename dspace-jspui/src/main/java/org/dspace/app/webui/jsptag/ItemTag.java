@@ -1229,4 +1229,14 @@ public class ItemTag extends TagSupport
         return result == null ? type : result;
     }
 
+    public static String getLanguageLocalized(String lang, String locale) {
+        java.util.Hashtable<String, String> langTable = new java.util.Hashtable<String, String>();
+        java.util.List vList = org.dspace.app.util.DCInputsReader.getInputsReader(locale).getPairs("common_iso_languages");
+
+        for (int i = 0; i < vList.size(); i += 2)
+            langTable.put((String) vList.get(i + 1), (String) vList.get(i));
+
+        String result = langTable.get(lang);
+        return result == null ? lang : result;
+    }
 }
