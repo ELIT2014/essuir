@@ -166,7 +166,7 @@
 	<%-- Search Box --%>
 	<form method="get" action="<%= request.getContextPath() %>/simple-search" class="navbar-form navbar-right" scope="search">
 	    <div class="form-group">
-          <input type="text" class="form-control" onclick="document.getElementById('submit').click();" placeholder="<fmt:message key="jsp.layout.navbar-default.search"/>" name="query" id="tequery" size="25"/>
+          <input type="text" class="form-control" style="cursor:pointer;" onclick="document.getElementById('submit').click();" placeholder="<fmt:message key="jsp.layout.navbar-default.search"/>" name="query" id="tequery" size="25" readonly/>
           <input type="hidden" name="rpp" value="20"/>
         </div>
         <button id="submit" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
