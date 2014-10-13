@@ -17,9 +17,11 @@
 
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="org.dspace.app.webui.util.UIUtil" %>
+<%@ page import="org.dspace.core.ConfigurationManager" %>
 
 <%
     String sidebar = (String) request.getAttribute("dspace.layout.sidebar");
+	String feedData = "ALL:" + ConfigurationManager.getProperty("webui.feed.formats");
 %>
 
             <%-- Right-hand side bar if appropriate --%>
@@ -59,7 +61,32 @@
                          "border='0' width='88' height='31'><\/a>")
                  //--></script><!--/LiveInternet-->
                      <!--Кнопка тИЦ--><a href="http://yandex.ru/cy?base=0&amp;host=essuir.sumdu.edu.ua"><img src="http://www.yandex.ru/cycounter?essuir.sumdu.edu.ua" width="88" height="31" alt="Яндекс цитирования" border="0" /></a><!--/Кнопка тИЦ-->
-
+				<%
+					String[] fmts = feedData.substring(feedData.indexOf(':')+1).split(",");
+					String icon = null;
+					int width = 0;
+					for (int j = 0; j < fmts.length; j++)
+					{
+						if ("rss_1.0".equals(fmts[j]))
+						{
+							icon = "rss1.gif";
+							width = 80;
+						}
+						else if ("rss_2.0".equals(fmts[j]))
+						{
+							icon = "rss2.gif";
+							width = 80;
+						}
+						else
+						{
+							icon = "rss.gif";
+							width = 36;
+						}
+                %>
+                <a href="<%= request.getContextPath() %>/feed/<%= fmts[j] %>/site"><img src="<%= request.getContextPath() %>/image/<%= icon %>" alt="RSS Feed" width="<%= width %>" height="15" vspace="3" border="0" /></a>
+                <%
+                    }
+                %>
                  <div id="footer_feedback" class="pull-right">
                                 <p class="text-muted"><fmt:message key="jsp.layout.footer-default.text"/>&nbsp;-
                                 <a target="_blank" href="<%= request.getContextPath() %>/feedback"><fmt:message key="jsp.layout.footer-default.feedback"/></a>
