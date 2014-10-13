@@ -64,39 +64,9 @@
     <table width="100%" style="margin-bottom:20px">
         <tr><td class="jumbotron" width="75%">
             <%= topNews %>
-        </td><td width="20px"/><td class="jumbotron">
+        </td><td width="20px"/><td valign="top" class="jumbotron">
+			<p style="margin-bottom:22px"><img src="/image/essuir-logo.gif" width="198" height="79" border="0"/></p>
             <%= sideNews %>
-            <p align="center"><strong><fmt:message key="jsp.home.feeds"/></strong><br/>
-                <%
-                    if(feedEnabled)
-                    {
-                        String[] fmts = feedData.substring(feedData.indexOf(':')+1).split(",");
-                        String icon = null;
-                        int width = 0;
-                        for (int j = 0; j < fmts.length; j++)
-                        {
-                            if ("rss_1.0".equals(fmts[j]))
-                            {
-                                icon = "rss1.gif";
-                                width = 80;
-                            }
-                            else if ("rss_2.0".equals(fmts[j]))
-                            {
-                                icon = "rss2.gif";
-                                width = 80;
-                            }
-                            else
-                            {
-                                icon = "rss.gif";
-                                width = 36;
-                            }
-                %>
-                <a href="<%= request.getContextPath() %>/feed/<%= fmts[j] %>/site"><img src="<%= request.getContextPath() %>/image/<%= icon %>" alt="RSS Feed" width="<%= width %>" height="15" vspace="3" border="0" /></a>
-                <%
-                        }
-                    }
-                %>
-            </p>
         </td></tr>
     </table>
 
