@@ -54,7 +54,7 @@
     		Map collectionMap, Map subcommunityMap) throws ItemCountException, IOException, SQLException
     {
 		boolean showLogos = ConfigurationManager.getBooleanProperty("jspui.community-list.logos", true);
-        out.println( "<li class=\"media well\">" );
+        out.println( "<li class=\"media well\" style=\"margin-top:15px;\">" );
         Bitstream logo = c.getLogo();
         if (showLogos && logo != null)
         {
@@ -62,13 +62,13 @@
         		+ c.getHandle() + "\"><img class=\"media-object img-responsive\" src=\"" + 
         		request.getContextPath() + "/retrieve/" + logo.getID() + "\" alt=\"community logo\"></a>");
         }
-        out.println( "<div class=\"media-body\"><h4 class=\"media-heading\"><a href=\"" + request.getContextPath() + "/handle/" 
+        out.println( "<div class=\"media-body\"><h3 class=\"media-heading\"><a href=\"" + request.getContextPath() + "/handle/" 
         	+ c.getHandle() + "\">" + c.getMetadata("name") + "</a>");
         if(ConfigurationManager.getBooleanProperty("webui.strengths.show"))
         {
             out.println(" <span class=\"badge\">" + ic.getCount(c) + "</span>");
         }
-		out.println("</h4>");
+		out.println("</h3>");
 		if (StringUtils.isNotBlank(c.getMetadata("short_description")))
 		{
 			out.println(c.getMetadata("short_description"));
