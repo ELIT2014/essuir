@@ -58,16 +58,16 @@
     final int octoberViews = 186357;
     final int octoberDownloads = 576457;
 
-    final int novemberViews = -1;
-    final int novemberDownloads = -1;
+    final int novemberViews = 161357;
+    final int novemberDownloads = 418954;
 
-//    final int decemberViews = -1; // current month
-//    final int decemberDownloads = -1;
+    final int decemberViews = -1; // current month
+    final int decemberDownloads = -1;
 
     stats = String.format(stats, sd.getTotalCount(), totalViews, totalDownloads,
-            totalViews - year2011Views - year2012Views - year2013Views - janViews - febViews - marViews - aprViews - mayViews - juneViews - julyViews - augustViews - septemberViews - octoberViews, // current month views
+            totalViews - year2011Views - year2012Views - year2013Views - janViews - febViews - marViews - aprViews - mayViews - juneViews - julyViews - augustViews - septemberViews - octoberViews - novemberViews, // current month views
             totalViews - year2011Views - year2012Views - year2013Views, // current year views
-            totalDownloads - year2011Downloads  - year2012Downloads - year2013Downloads - janDownloads - febDownloads - marDownloads - aprDownloads - mayDownloads - juneDownloads - julyDownloads - augustDownloads - septemberDownloads - octoberDownloads, // current month downloads
+            totalDownloads - year2011Downloads  - year2012Downloads - year2013Downloads - janDownloads - febDownloads - marDownloads - aprDownloads - mayDownloads - juneDownloads - julyDownloads - augustDownloads - septemberDownloads - octoberDownloads - novemberDownloads, // current month downloads
             totalDownloads - year2011Downloads - year2012Downloads - year2013Downloads); // current year downloads
 %>
 
