@@ -26,7 +26,7 @@ public class GeoIp  {
 
         LookupService service = null;
         // Get the db file for the location
-	String dbfile = ConfigurationManager.getProperty("solr-statistics", "dbfile");
+	String dbfile = ConfigurationManager.getProperty("usage-statistics", "dbfile");
 	
        if (dbfile != null) {
             try {
