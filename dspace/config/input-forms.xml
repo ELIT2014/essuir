@@ -138,7 +138,7 @@
          <repeatable>true</repeatable>
          <label>Subject Keywords</label>
          <input-type>threelocbox</input-type>
-         <hint>Enter appropriate subject keywords or phrases below. </hint>
+         <hint>Enter appropriate subject keywords or phrases below. Each keyword or phrase is entered in a single cell with a small letter. </hint>
          <required></required>
          <vocabulary>srsc</vocabulary>
        </field>

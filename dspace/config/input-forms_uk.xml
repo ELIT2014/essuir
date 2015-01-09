@@ -135,9 +135,9 @@
          <dc-qualifier></dc-qualifier>
          <!-- An input-type of twobox MUST be marked as repeatable -->
          <repeatable>true</repeatable>
-         <label>Тематика і ключові слова</label>
+         <label>Ключові слова</label>
          <input-type>threelocbox</input-type>
-         <hint>Введіть нижче відповідні матеріалу ключові слова та тематичні рубрики. </hint>
+         <hint>Введіть нижче відповідні матеріалу ключові слова. Кожне ключове слово або фраза заносяться в окремий рядок з маленької літери. </hint>
          <required></required>
          <vocabulary>srsc</vocabulary>
        </field>
