@@ -233,7 +233,7 @@
             <%
                 }
             %>                                </select>
-        <input type="submit" id="main-query-submit" class="btn btn-primary" value="<fmt:message key="jsp.general.go"/>" />
+        <input type="submit" id="main-query-submit" class="btn btn-default" value="<fmt:message key="jsp.general.go"/>" />
         <% if (StringUtils.isNotBlank(spellCheckQuery)) {%>
         <p class="lead"><fmt:message key="jsp.search.didyoumean"><fmt:param><a id="spellCheckQuery" data-spell="<%= StringEscapeUtils.escapeHtml(spellCheckQuery) %>" href="#"><%= spellCheckQuery %></a></fmt:param></fmt:message></p>
         <% } %>
@@ -439,7 +439,7 @@
                 }
             %>
         </select>
-        <input class="btn btn-default" type="submit" name="submit_search" value="<fmt:message key="search.update" />" />
+        <input class="btn btn-primary" type="submit" name="submit_search" value="<fmt:message key="search.update" />" />
 
         <%
             if (admin_button)
