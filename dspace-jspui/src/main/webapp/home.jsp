@@ -65,7 +65,7 @@
         <tr><td class="jumbotron" width="75%">
             <%= topNews %>
         </td><td width="20px"/><td valign="top" class="jumbotron">
-            <p align="center" style="margin-bottom:22px"><a href="http://sumdu.edu.ua"><img src="/image/sumdu-logo-tr.gif"></a></p>
+            <p align="center" style="margin-bottom:22px"><a href="http://sumdu.edu.ua"><img src="/image/sumdu-logo-tr.gif" style="margin-top: 38px;"></a></p>
             <%= sideNews %>
         </td></tr>
     </table>
