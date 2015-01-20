@@ -47,7 +47,7 @@
                  <a href="http://www.prchecker.info/" title="PRchecker.info" target="_blank" rel="nofollow">
                      <img src="http://pr-v2.prchecker.info/getpr.v2.php?codex=aHR0cDovL2Vzc3Vpci5zdW1kdS5lZHUudWEv&amp;tag=2" alt="PRchecker.info" style="border:0;"></a>
                  <!--/PR -->
-                 <!--LiveInternet counter--><script type="text/javascript">
+                 <!--LiveInternet counter--><script type="text/javascript"><!--
                  document.write("<a href='http://www.liveinternet.ru/click' "+
                          "target=_blank><img src='//counter.yadro.ru/hit?t14.6;r"+
                          escape(document.referrer)+((typeof(screen)=="undefined")?"":
@@ -57,7 +57,7 @@
                          "' alt='' title='LiveInternet: показано число просмотров за 24"+
                          " часа, посетителей за 24 часа и за сегодня' "+
                          "border='0' width='88' height='31'><\/a>")
-                 </script><!--/LiveInternet-->
+                 //--></script><!--/LiveInternet-->
                      <!--Кнопка тИЦ--><a href="http://yandex.ru/cy?base=0&amp;host=essuir.sumdu.edu.ua"><img src="http://www.yandex.ru/cycounter?essuir.sumdu.edu.ua" width="88" height="31" alt="Яндекс цитирования" border="0" /></a><!--/Кнопка тИЦ-->
 				<%
 					String[] fmts = feedData.substring(feedData.indexOf(':')+1).split(",");
