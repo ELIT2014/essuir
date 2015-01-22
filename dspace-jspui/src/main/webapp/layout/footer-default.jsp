@@ -93,7 +93,7 @@
                 <%
                     }
                 %>
-                 <div id="footer_feedback" class="pull-right">
+                 <div id="footer_feedback" class="pull-right" style="font-size:10pt">
                                 <p class="text-muted"><fmt:message key="jsp.layout.footer-default.text"/>&nbsp;-
                                 <a target="_blank" href="<%= request.getContextPath() %>/feedback"><fmt:message key="jsp.layout.footer-default.feedback"/></a>
                                 <a href="<%= request.getContextPath() %>/htmlmap"></a></p>
