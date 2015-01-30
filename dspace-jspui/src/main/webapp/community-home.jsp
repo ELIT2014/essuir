@@ -170,7 +170,7 @@
                 if (ConfigurationManager.getBooleanProperty("webui.strengths.show"))
                 {
 %>
-                    [<%= ic.getCount(subcommunities[j]) %>]
+                    <span class="badge"><%= ic.getCount(subcommunities[j]) %></span>
 <%
                 }
 %>
@@ -198,9 +198,16 @@
 <%
     if (collections.length != 0)
     {
+        if (subcommunities.length == 0) {
 %>
-	<div class="col-md-6">
-
+            <div class="col-md-12">
+<%
+        } else {
+%>
+	        <div class="col-md-6">
+<%
+        }
+%>
         <%-- <h2>Collections in this community</h2> --%>
 		<h3><fmt:message key="jsp.community-home.heading2"/></h3>
 		<div class="list-group">
