@@ -67,7 +67,7 @@ public class BrowserServlet extends AbstractBrowserServlet
 
         if (scope.getBrowseIndex() == null)
         {
-            throw new ServletException("There is no browse index for the request");
+            //throw new ServletException("There is no browse index for the request");
         }
 
         // Is this a request to export the metadata, or a normal browse request?
