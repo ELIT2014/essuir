@@ -28,47 +28,21 @@
     final int year2013Views = 1309485;
     final int year2013Downloads = 2638394;
 
-    final int janViews = 129489;  // current month
-    final int janDownloads = 234202;
-    final int febViews = 318459;
-    final int febDownloads = 615975;
+    final int year2014Views = 4003814;
+    final int year2014Downloads = 4491129 ;
 
+    final int janViews = 109276;
+    final int janDownloads = 189743;
 
-    final int marViews = 162056;
-    final int marDownloads = 455284;
+    final int febViews = -1;  // current month
+    final int febDownloads = -1;
 
-    final int aprViews = 160888;
-    final int aprDownloads = 385879;
-
-    final int mayViews = 152717;
-    final int mayDownloads = 407188;
-
-    final int juneViews = 164901;
-    final int juneDownloads = 353624;
-
-    final int julyViews = 71293;
-    final int julyDownloads = 133070;
-
-    final int augustViews = 86200;
-    final int augustDownloads = 68163;
-
-    final int septemberViews = 300045;
-    final int septemberDownloads = 492900;
-
-    final int octoberViews = 186357;
-    final int octoberDownloads = 576457;
-
-    final int novemberViews = 161357;
-    final int novemberDownloads = 418954;
-
-    final int decemberViews = -1; // current month
-    final int decemberDownloads = -1;
 
     stats = String.format(stats, sd.getTotalCount(), totalViews, totalDownloads,
-            totalViews - year2011Views - year2012Views - year2013Views - janViews - febViews - marViews - aprViews - mayViews - juneViews - julyViews - augustViews - septemberViews - octoberViews - novemberViews, // current month views
-            totalViews - year2011Views - year2012Views - year2013Views, // current year views
-            totalDownloads - year2011Downloads  - year2012Downloads - year2013Downloads - janDownloads - febDownloads - marDownloads - aprDownloads - mayDownloads - juneDownloads - julyDownloads - augustDownloads - septemberDownloads - octoberDownloads - novemberDownloads, // current month downloads
-            totalDownloads - year2011Downloads - year2012Downloads - year2013Downloads); // current year downloads
+            totalViews - year2011Views - year2012Views - year2013Views - year2014Views - janViews, // current month views
+            totalViews - year2011Views - year2012Views - year2013Views - year2014Views, // current year views
+            totalDownloads - year2011Downloads  - year2012Downloads - year2013Downloads - year2014Downloads - janDownloads, // current month downloads
+            totalDownloads - year2011Downloads - year2012Downloads - year2013Downloads - year2014Downloads); // current year downloads
 %>
 
 <dspace:layout locbar="nolink" titlekey="jsp.layout.navbar-admin.statistics">
