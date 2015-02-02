@@ -31,11 +31,9 @@ import org.dspace.core.LogManager;
 import org.dspace.eperson.EPerson;
 import org.dspace.eperson.Group;
 import org.dspace.handle.HandleManager;
-import org.dspace.storage.rdbms.DatabaseManager;
 import org.dspace.submit.AbstractProcessingStep;
 import org.dspace.workflow.WorkflowItem;
 import org.dspace.workflow.WorkflowManager;
-import ua.edu.sumdu.essuir.cache.AuthorCache;
 
 /**
  * Servlet for constructing the components of the "My DSpace" page
@@ -421,11 +419,6 @@ public class MyDSpaceServlet extends DSpaceServlet
         if (buttonPressed.equals("submit_approve"))
         {
             Item item = workflowItem.getItem();
-
-            DCValue[] authors = item.getMetadata("dc", "contributor", "author", Item.ANY);
-            for (int i = 0; i < authors.length / 3; i++) {
-                AuthorCache.addAuthor(context, new String[] {authors[i * 3].value, authors[i * 3 + 1].value, authors[i * 3 + 2].value});
-            }
 
             // Advance the item along the workflow
             WorkflowManager.advance(context, workflowItem, context
