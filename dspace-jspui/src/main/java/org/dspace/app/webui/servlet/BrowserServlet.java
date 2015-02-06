@@ -67,6 +67,7 @@ public class BrowserServlet extends AbstractBrowserServlet
 
         if (scope.getBrowseIndex() == null)
         {
+            return;
             //throw new ServletException("There is no browse index for the request");
         }
 
