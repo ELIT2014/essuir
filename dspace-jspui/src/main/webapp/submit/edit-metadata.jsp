@@ -285,7 +285,9 @@
                 " .ac_loading { background : Window url('autocomplete_indicator.gif') right center no-repeat; } " +
                 " .ac_over { background-color: Highlight; color: HighlightText; } </style> \n " +
                 " <script type=\"text/javascript\" src=\"jquery-1.5.1.min.js\"></script> " +
-                " <script type=\"text/javascript\" src=\"jquery.autocomplete.js\"></script> ");
+                " <script type=\"text/javascript\" src=\"jquery.autocomplete.js\"></script> " +
+                " <script type=\"text/javascript\" src=\"jquery.keyboard.js\"></script>" +
+                " <script type=\"text/javascript\"> $(function(){$('input.keyboard_layout').keyboardLayout();});</script>");
 
         sb.append("<div class=\"row\"><label class=\"col-md-2"+ (required?" label-required":"") +"\">").append(label).append("</label>");
         sb.append("<div class=\"col-md-10\">");
@@ -355,7 +357,7 @@
             sb.append("<label class=\"col-md-2\">" + LocaleSupport.getLocalizedMessage(pageContext, "jsp.submit.edit-metadata.locale_" + locals[i % 3]) + "</label>")
                     .append("<span class=\"col-md-4\"><input placeholder=\"")
                     .append(Utils.addEntities(entity))
-                    .append("\" class=\"form-control\" type=\"text\" name=\"")
+                    .append("\" class=\"form-control keyboard_layout\" type=\"text\" name=\"")
                     .append(last.toString())
                     .append("\" id=\"")
                     .append(last.toString())
@@ -377,7 +379,7 @@
                     .append(dpn.getLastName().replaceAll("\"", "&quot;")) // Encode "
                     .append("\"/></span><span class=\"col-md-4\"><input placeholder=\"")
                     .append(Utils.addEntities(entity))
-                    .append("\" class=\"form-control\" type=\"text\" name=\"")
+                    .append("\" class=\"form-control keyboard_layout\" type=\"text\" name=\"")
                     .append(first.toString())
                     .append("\" id=\"")
                     .append(first.toString())
