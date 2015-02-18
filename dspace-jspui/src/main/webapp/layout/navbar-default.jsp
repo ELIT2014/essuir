@@ -115,7 +115,7 @@
           <li class="<%= ( currentPage.endsWith( "/help" ) ? "active" : "" ) %>"><dspace:popup page="<%= LocaleSupport.getLocalizedMessage(pageContext, \"help.index\") %>"><fmt:message key="jsp.layout.navbar-default.help"/></dspace:popup></li>
           <li class="google" style="padding-top: 15px; padding-left: 25px;">
              <!-- Поместите этот тег туда, где должна отображаться кнопка +1. -->
-             <div class="g-plusone" data-annotation="inline" data-width="300" data-href="http://learn-it.sumdu.edu.ua/"></div>
+             <div class="g-plusone" data-annotation="inline" data-width="200" data-href="http://essuir.sumdu.edu.ua"></div>
 
              <!-- Поместите этот тег за последним тегом виджета кнопка +1. -->
               <script type="text/javascript">
