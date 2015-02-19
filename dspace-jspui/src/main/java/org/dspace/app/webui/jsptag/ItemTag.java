@@ -787,9 +787,16 @@ public class ItemTag extends TagSupport
         if (views != null) {
             for (int i = 0; i < views.length; i++) {
                 out.println("<tr>");
-                out.println("<td>" +
-                        org.dspace.statistics.util.LocationUtils.getCountryName(views[i][0])
-                        + "</td>");
+                out.print("<td>\n" +
+                        "<img src=\"/flags/");
+                if (!views[i][0].toLowerCase().equals(new String("ua"))){
+                    out.print(views[i][0].toLowerCase());
+                } else{
+                    out.print("uk");
+                }
+                out.print(".gif\">\n" +
+                        org.dspace.statistics.util.LocationUtils.getCountryName(views[i][0]) +
+                        "</td>");
                 out.println("<td width=\"120\">" + views[i][1] + "</td>");
                 out.println("</tr>");
             }
