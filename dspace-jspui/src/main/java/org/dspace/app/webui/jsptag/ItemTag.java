@@ -806,7 +806,7 @@ public class ItemTag extends TagSupport
 
         out.println("</table>");
         out.println("<br/>");
-        Item item = (Item) request.getAttribute("item");
+
         String handle = item.getHandle();
 
         out.println("<div style=\"text-align: center;\">\n" +
