@@ -50,6 +50,7 @@ import org.dspace.core.I18nUtil;
 import org.dspace.core.PluginManager;
 import org.dspace.core.Utils;
 import org.dspace.handle.HandleManager;
+import ua.edu.sumdu.essuir.EssuirStatistics;
 
 /**
  * <P>
@@ -794,8 +795,9 @@ public class ItemTag extends TagSupport
                 } else{
                     out.print("uk");
                 }
+                String tmp = org.dspace.statistics.util.LocationUtils.getCountryName(views[i][0], UIUtil.getSessionLocale(request));
                 out.print(".gif\">\n" +
-                        org.dspace.statistics.util.LocationUtils.getCountryName(views[i][0]) +
+                        (tmp.equals("--") ? LocaleSupport.getLocalizedMessage(pageContext, "metadata.country.other") : tmp) +
                         "</td>");
                 out.println("<td width=\"120\">" + views[i][1] + "</td>");
                 out.println("</tr>");
