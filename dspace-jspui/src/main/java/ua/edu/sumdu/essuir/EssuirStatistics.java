@@ -70,10 +70,10 @@ public class EssuirStatistics {
 
     
     public static String updateBitstream(HttpServletRequest request, int item_id, int sequence_id) {
-    	spy(item_id, true, request.getRemoteAddr());    	
-    	
+    	spy(item_id, true, request.getRemoteAddr());
+
     	update(request, item_id, sequence_id, "--", 1);
-    	
+
     	String[][] views = select(request, item_id, sequence_id, null);
     	
 	if (views == null || views.length == 0)
