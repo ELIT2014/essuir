@@ -778,8 +778,11 @@ public class ItemTag extends TagSupport
         HttpServletRequest request = (HttpServletRequest) pageContext
                 .getRequest();
 
-        out.println("<table align=\"center\" width=\"400\" class=\"reportBlock\">");
-        out.println("<tr class=\"reportOddRow\"><th colspan=\"2\">" +
+        out.println("<table align=\"center\" class=\"reportBlock\" style=\"border-spacing: 25px 0px;\">\n" +
+                "\t <tr>\n" +
+                "\t\t<td valign=\"top\" class=\"panel panel-info\">\n" +
+                "\t\t<table width=\"400\">");
+        out.println("<tr class=\"reportOddRow submitFormHelp alert alert-info\" valign=\"top\"><th colspan=\"2\" style=\"text-align: center;\">" +
                 LocaleSupport.getLocalizedMessage(pageContext, "metadata.viewed") +
                 "</th></tr>");
 
@@ -788,7 +791,7 @@ public class ItemTag extends TagSupport
         if (views != null) {
             for (int i = 0; i < views.length; i++) {
                 out.println("<tr>");
-                out.print("<td>\n" +
+                out.print("<td style=\"padding-left: 10px;\">\n" +
                         "<img src=\"/flags/");
                 if (!views[i][0].toLowerCase().equals(new String("ua"))){
                     out.print(views[i][0].toLowerCase());
@@ -799,14 +802,17 @@ public class ItemTag extends TagSupport
                 out.print(".gif\">\n" +
                         (tmp.equals("--") ? LocaleSupport.getLocalizedMessage(pageContext, "metadata.country.other") : tmp) +
                         "</td>");
-                out.println("<td width=\"120\">" + views[i][1] + "</td>");
+                out.println("<td width=\"120\" style=\"padding-left: 15px;\">" + views[i][1] + "</td>");
                 out.println("</tr>");
             }
         } else {
             out.println("<tr><td colspan=\"2\">No available statistics</td></tr>");
         }
 
-        out.println("</table>");
+        out.println("</table>\n" +
+                "\t\t</td>");
+        out.println("</tr>\n" +
+                "</table>");
         out.println("<br/>");
 
         String handle = item.getHandle();
