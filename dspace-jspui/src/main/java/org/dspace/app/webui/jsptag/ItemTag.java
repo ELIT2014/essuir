@@ -815,63 +815,67 @@ public class ItemTag extends TagSupport
                 "</table>");
         out.println("<br/>");
 
-        String handle = item.getHandle();
+        String ip = request.getRemoteAddr();
+        if(!ip.substring(0,7).equals("192.168")){
 
-        out.println("<div style=\"text-align: center;\">\n" +
-                "\t<div class=\"HeaderShareButtons\" style=\"display: inline-flex;\">");
-        // VK button
-        out.println("<div class=\"vk\">\n" +
-                "\t\t<!-- Put this script tag to the <head> of your page -->\n" +
-                "\t\t\t<script type=\"text/javascript\" src=\"//vk.com/js/api/openapi.js?116\"></script>\n" +
-                "\t\t\t<script type=\"text/javascript\">\n" +
-                "\t\t\t  VK.init({apiId: 4787414, onlyWidgets: true});\n" +
-                "\t\t\t</script>\n" +
-                "\t\t\t<!-- Put this div tag to the place, where the Like block will be -->\n" +
-                "\t\t\t<div id=\"vk_like\"></div>\n" +
-                "\t\t\t<script type=\"text/javascript\">\n" +
-                "\t\t\tVK.Widgets.Like(\"vk_like\", {type: \"button\"});\n" +
-                "\t\t\tlikes.getList();\n" +
-                "\t\t\t</script>\n" +
-                "\t\t</div>");
-        // Facebook button
-        out.print("<div class=\"facebook\" style=\"padding-top: 1px;\">\n" +
-                "\t\t\t<div id=\"fb-root\"></div>\n" +
-                "\t\t\t\t<script>(function(d, s, id) {\n" +
-                "\t\t\t\t  var js, fjs = d.getElementsByTagName(s)[0];\n" +
-                "\t\t\t\t  if (d.getElementById(id)) return;\n" +
-                "\t\t\t\t  js = d.createElement(s); js.id = id;\n" +
-                "\t\t\t\t  js.src = \"//connect.facebook.net/");
-        if(UIUtil.getSessionLocale(request).getLanguage().equals(new Locale("uk").getLanguage())){
-            out.print("uk_UA");
-        }else if(UIUtil.getSessionLocale(request).getLanguage().equals(new Locale("ru").getLanguage())){
-            out.print("ru_RU");
-        }else if(UIUtil.getSessionLocale(request).getLanguage().equals(new Locale("en").getLanguage())){
-            out.print("en_US");
+            String handle = item.getHandle();
+
+            out.println("<div style=\"text-align: center;\">\n" +
+                    "\t<div class=\"HeaderShareButtons\" style=\"display: inline-flex;\">");
+            // VK button
+            out.println("<div class=\"vk\">\n" +
+                    "\t\t<!-- Put this script tag to the <head> of your page -->\n" +
+                    "\t\t\t<script type=\"text/javascript\" src=\"//vk.com/js/api/openapi.js?116\"></script>\n" +
+                    "\t\t\t<script type=\"text/javascript\">\n" +
+                    "\t\t\t  VK.init({apiId: 4787414, onlyWidgets: true});\n" +
+                    "\t\t\t</script>\n" +
+                    "\t\t\t<!-- Put this div tag to the place, where the Like block will be -->\n" +
+                    "\t\t\t<div id=\"vk_like\"></div>\n" +
+                    "\t\t\t<script type=\"text/javascript\">\n" +
+                    "\t\t\tVK.Widgets.Like(\"vk_like\", {type: \"button\"});\n" +
+                    "\t\t\tlikes.getList();\n" +
+                    "\t\t\t</script>\n" +
+                    "\t\t</div>");
+            // Facebook button
+            out.print("<div class=\"facebook\" style=\"padding-top: 1px;\">\n" +
+                    "\t\t\t<div id=\"fb-root\"></div>\n" +
+                    "\t\t\t\t<script>(function(d, s, id) {\n" +
+                    "\t\t\t\t  var js, fjs = d.getElementsByTagName(s)[0];\n" +
+                    "\t\t\t\t  if (d.getElementById(id)) return;\n" +
+                    "\t\t\t\t  js = d.createElement(s); js.id = id;\n" +
+                    "\t\t\t\t  js.src = \"//connect.facebook.net/");
+            if (UIUtil.getSessionLocale(request).getLanguage().equals(new Locale("uk").getLanguage())) {
+                out.print("uk_UA");
+            } else if (UIUtil.getSessionLocale(request).getLanguage().equals(new Locale("ru").getLanguage())) {
+                out.print("ru_RU");
+            } else if (UIUtil.getSessionLocale(request).getLanguage().equals(new Locale("en").getLanguage())) {
+                out.print("en_US");
+            }
+            out.println("/sdk.js#xfbml=1&version=v2.0\";\n" +
+                    "\t\t\t\t  fjs.parentNode.insertBefore(js, fjs);\n" +
+                    "\t\t\t\t}(document, 'script', 'facebook-jssdk'));</script>\n" +
+                    "\n" +
+                    "\t\t\t\t<div class=\"fb-like\" data-href=\"" + HandleManager.getCanonicalForm(handle) + "\" data-width=\"150\" data-layout=\"button_count\" data-action=\"like\" data-show-faces=\"true\" data-share=\"false\"></div>\n" +
+                    "\t\t</div>");
+            // Google button
+            out.println("<div class=\"google\" style=\"padding-top: 1px; padding-left: 36px;\">\n" +
+                    "\t\t\t<!-- Вставьте этот тег в заголовке страницы или непосредственно перед закрывающим тегом основной части. -->\n" +
+                    "\t\t\t<script src=\"https://apis.google.com/js/platform.js\" async defer>\n" +
+                    "\t\t\t  {lang: \'" + UIUtil.getSessionLocale(request).getLanguage() + "\'}\n" +
+                    "\t\t\t</script>\n" +
+                    "\t\t\t<!-- Поместите этот тег туда, где должна отображаться кнопка \"Поделиться\". -->\n" +
+                    "\t\t\t<div class=\"g-plus\" data-action=\"share\" data-annotation=\"bubble\" data-href=\"" + HandleManager.getCanonicalForm(handle) + "\"></div>\n" +
+                    "\t\t</div>");
+            //Twitter button
+            out.println("<div class=\"twitter\" style=\"padding-top: 1px; padding-left: 36px;\">\n" +
+                    "\t\t\t<a href=\"https://twitter.com/share\" class=\"twitter-share-button\" data-hashtags=\"SumDU\">Tweet</a>\n" +
+                    "\t\t\t<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>\n" +
+                    "\t\t</div>");
+
+            out.println("\t</div>\n" +
+                    "</div>");
+            out.println("<br/>");
         }
-                out.println("/sdk.js#xfbml=1&version=v2.0\";\n" +
-                "\t\t\t\t  fjs.parentNode.insertBefore(js, fjs);\n" +
-                "\t\t\t\t}(document, 'script', 'facebook-jssdk'));</script>\n" +
-                "\n" +
-                "\t\t\t\t<div class=\"fb-like\" data-href=\""+ HandleManager.getCanonicalForm(handle) + "\" data-width=\"150\" data-layout=\"button_count\" data-action=\"like\" data-show-faces=\"true\" data-share=\"false\"></div>\n" +
-                "\t\t</div>");
-        // Google button
-        out.println("<div class=\"google\" style=\"padding-top: 1px; padding-left: 36px;\">\n" +
-                "\t\t\t<!-- Вставьте этот тег в заголовке страницы или непосредственно перед закрывающим тегом основной части. -->\n" +
-                "\t\t\t<script src=\"https://apis.google.com/js/platform.js\" async defer>\n" +
-                "\t\t\t  {lang: \'" + UIUtil.getSessionLocale(request).getLanguage() +"\'}\n" +
-                "\t\t\t</script>\n" +
-                "\t\t\t<!-- Поместите этот тег туда, где должна отображаться кнопка \"Поделиться\". -->\n" +
-                "\t\t\t<div class=\"g-plus\" data-action=\"share\" data-annotation=\"bubble\" data-href=\"" + HandleManager.getCanonicalForm(handle) +"\"></div>\n" +
-                "\t\t</div>");
-        //Twitter button
-        out.println("<div class=\"twitter\" style=\"padding-top: 1px; padding-left: 36px;\">\n" +
-                "\t\t\t<a href=\"https://twitter.com/share\" class=\"twitter-share-button\" data-hashtags=\"SumDU\">Tweet</a>\n" +
-                "\t\t\t<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>\n" +
-                "\t\t</div>");
-
-        out.println("\t</div>\n" +
-                "</div>");
-        out.println("<br/>");
     }
 
     /**
