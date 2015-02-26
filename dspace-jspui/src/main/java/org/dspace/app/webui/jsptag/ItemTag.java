@@ -811,7 +811,36 @@ public class ItemTag extends TagSupport
 
         out.println("</table>\n" +
                 "\t\t</td>");
-        out.println("</tr>\n" +
+        out.println("<td valign=\"top\" class=\"panel panel-info\">\n" +
+                "\t\t\t<table width=\"400\">");
+        out.println("<tr class=\"reportOddRow submitFormHelp alert alert-info\" valign=\"top\"><th colspan=\"2\" style=\"text-align: center;\">" +
+                    LocaleSupport.getLocalizedMessage(pageContext, "metadata.downloaded") + "</th></tr>");
+        String[][] downloads = ua.edu.sumdu.essuir.EssuirStatistics.selectBitstreamByCountries(request, item.getID(), 1);
+
+        if (downloads != null) {
+            for (int i = 0; i < downloads.length; i++) {
+                out.println("<tr>");
+                out.print("<td style=\"padding-left: 10px;\">\n" +
+                        "<img src=\"/flags/");
+                if (!downloads[i][0].toLowerCase().equals(new String("ua"))){
+                    out.print(downloads[i][0].toLowerCase());
+                } else{
+                    out.print("uk");
+                }
+                String tmp = org.dspace.statistics.util.LocationUtils.getCountryName(downloads[i][0], UIUtil.getSessionLocale(request));
+                out.print(".gif\">\n" +
+                        (tmp.equals("--") ? LocaleSupport.getLocalizedMessage(pageContext, "metadata.country.other") : tmp) +
+                        "</td>");
+                out.println("<td width=\"120\" style=\"padding-left: 15px;\">" + downloads[i][1] + "</td>");
+                out.println("</tr>");
+            }
+        } else {
+            out.println("<tr><td colspan=\"2\">No available statistics</td></tr>");
+        }
+
+        out.println("</table>\n" +
+                "\t\t</td>\t\t\n" +
+                "\t</tr>\n" +
                 "</table>");
         out.println("<br/>");
 
