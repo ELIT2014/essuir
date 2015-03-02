@@ -8,16 +8,9 @@
 package org.dspace.app.webui.jsptag;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,7 +43,6 @@ import org.dspace.core.I18nUtil;
 import org.dspace.core.PluginManager;
 import org.dspace.core.Utils;
 import org.dspace.handle.HandleManager;
-import ua.edu.sumdu.essuir.EssuirStatistics;
 
 /**
  * <P>
@@ -815,27 +807,37 @@ public class ItemTag extends TagSupport
                 "\t\t\t<table width=\"400\">");
         out.println("<tr class=\"reportOddRow submitFormHelp alert alert-info\" valign=\"top\"><th colspan=\"2\" style=\"text-align: center;\">" +
                     LocaleSupport.getLocalizedMessage(pageContext, "metadata.downloaded") + "</th></tr>");
-        String[][] downloads = ua.edu.sumdu.essuir.EssuirStatistics.selectBitstreamByCountries(request, item.getID(), 1);
+        String[][] downloads = ua.edu.sumdu.essuir.EssuirStatistics.selectBitstreamByCountries(request, item.getID(), 0);
+        List<String[]> tempDownloads = new ArrayList(Arrays.asList(downloads));
+        for (int i = 0; i < tempDownloads.size() - 1; i++) {
+            for (int j = i + 1; j < tempDownloads.size(); j++) {
+                if(tempDownloads.get(i)[0].equals(tempDownloads.get(j)[0])){
+                    tempDownloads.get(i)[1] = Integer.valueOf(Integer.parseInt(tempDownloads.get(i)[1]) + Integer.parseInt(tempDownloads.get(j)[1])).toString();
+                    tempDownloads.remove(j);
+                    j--;
+                }
+            }
+        }
 
-        if (downloads != null) {
-            for (int i = 0; i < downloads.length; i++) {
+        if (!tempDownloads.equals(null)) {
+            for (int i = 0; i < tempDownloads.size(); i++) {
                 out.println("<tr>");
                 out.print("<td style=\"padding-left: 10px;\">\n" +
                         "<img src=\"/flags/");
-                if (!downloads[i][0].toLowerCase().equals(new String("ua"))){
-                    out.print(downloads[i][0].toLowerCase());
-                } else{
+                if (!tempDownloads.get(i)[0].toLowerCase().equals(new String("ua"))) {
+                    out.print(tempDownloads.get(i)[0].toLowerCase());
+                } else {
                     out.print("uk");
                 }
-                String tmp = org.dspace.statistics.util.LocationUtils.getCountryName(downloads[i][0], UIUtil.getSessionLocale(request));
+                String tmp = org.dspace.statistics.util.LocationUtils.getCountryName(tempDownloads.get(i)[0], UIUtil.getSessionLocale(request));
                 out.print(".gif\">\n" +
                         (tmp.equals("--") ? LocaleSupport.getLocalizedMessage(pageContext, "metadata.country.other") : tmp) +
                         "</td>");
-                out.println("<td width=\"120\" style=\"padding-left: 15px;\">" + downloads[i][1] + "</td>");
+                out.println("<td width=\"120\" style=\"padding-left: 15px;\">" + tempDownloads.get(i)[1] + "</td>");
                 out.println("</tr>");
             }
         } else {
-            out.println("<tr><td colspan=\"2\">No available statistics</td></tr>");
+            out.println("<tr><td colspan=\"2\">" + LocaleSupport.getLocalizedMessage(pageContext, "metadata.no-available-statistics")+ "</td></tr>");
         }
 
         out.println("</table>\n" +
