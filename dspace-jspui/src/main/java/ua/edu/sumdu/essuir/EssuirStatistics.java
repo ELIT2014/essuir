@@ -151,17 +151,15 @@ public class EssuirStatistics {
        				"WHERE item_id=" + item_id;
 
             if (sequence_id != 0) {
-                query += " AND sequence_id='" + sequence_id;
+                query += " AND sequence_id = " + sequence_id;
             }
             /* This code is used for getting information about amount of downloads*/
             else{
-                query += " AND sequence_id >'" + sequence_id;
+                query += " AND sequence_id > " + sequence_id;
             }
 
 	        if (countryCode != null)
-	        	query += " AND country_code='" + countryCode;
-
-            query += "'";
+	        	query += " AND country_code='" + countryCode + "'";
 
 	        ArrayList<String[]> res = new ArrayList<String[]>();
 	        Connection c = null;
