@@ -809,17 +809,16 @@ public class ItemTag extends TagSupport
                     LocaleSupport.getLocalizedMessage(pageContext, "metadata.downloaded") + "</th></tr>");
         String[][] downloads = ua.edu.sumdu.essuir.EssuirStatistics.selectBitstreamByCountries(request, item.getID(), 0);
         List<String[]> tempDownloads = new ArrayList(Arrays.asList(downloads));
-        for (int i = 0; i < tempDownloads.size() - 1; i++) {
-            for (int j = i + 1; j < tempDownloads.size(); j++) {
-                if(tempDownloads.get(i)[0].equals(tempDownloads.get(j)[0])){
-                    tempDownloads.get(i)[1] = Integer.valueOf(Integer.parseInt(tempDownloads.get(i)[1]) + Integer.parseInt(tempDownloads.get(j)[1])).toString();
-                    tempDownloads.remove(j);
-                    j--;
+        if (!tempDownloads.equals(null)) {
+            for (int i = 0; i < tempDownloads.size() - 1; i++) {
+                for (int j = i + 1; j < tempDownloads.size(); j++) {
+                    if(tempDownloads.get(i)[0].equals(tempDownloads.get(j)[0])){
+                        tempDownloads.get(i)[1] = Integer.valueOf(Integer.parseInt(tempDownloads.get(i)[1]) + Integer.parseInt(tempDownloads.get(j)[1])).toString();
+                        tempDownloads.remove(j);
+                        j--;
+                    }
                 }
             }
-        }
-
-        if (!tempDownloads.equals(null)) {
             for (int i = 0; i < tempDownloads.size(); i++) {
                 out.println("<tr>");
                 out.print("<td style=\"padding-left: 10px;\">\n" +
