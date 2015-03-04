@@ -69,17 +69,20 @@ public class EssuirStatistics {
     }
 
     
-    public static String updateBitstream(HttpServletRequest request, int item_id, int sequence_id) {
+    public static String[][] updateBitstream(HttpServletRequest request, int item_id, int sequence_id) {
     	spy(item_id, true, request.getRemoteAddr());
+        String countryCode = GeoIp.getCountryCode(request);
+    	update(request, item_id, sequence_id, countryCode, 1);
 
-    	update(request, item_id, sequence_id, "--", 1);
-
-    	String[][] views = select(request, item_id, sequence_id, null);
+    	String[][] views = select(request, item_id, sequence_id, countryCode);
     	
-	if (views == null || views.length == 0)
-		return "0";
+        if (views == null || views.length == 0) {
+            String[][] tmp = new String[1][1];
+            tmp[0][0] = "0";
+            return tmp;
+        }
 
-    	return views[0][1];
+    	return views;
     }
     
     
@@ -91,13 +94,26 @@ public class EssuirStatistics {
     public static String selectBitstream(HttpServletRequest request, int item_id, int sequence_id) {
     	String[][] views = select(request, item_id, sequence_id, null);
     	
-	if (views == null || views.length == 0)
-		return "0";
+        if (views == null || views.length == 0)
+            return "0";
 
-    	return views[0][1];
+        int sumDownloads = 0;
+        for (int i = 0; i < views.length; i++){
+            sumDownloads += Integer.parseInt(views[i][1]);
+        }
+
+    	return Integer.valueOf(sumDownloads).toString();
     }
-    
-    
+
+    public static String[][] selectBitstreamByCountries(HttpServletRequest request, int item_id, int sequence_id){
+        String[][] views = select(request, item_id, sequence_id, null);
+
+        if (views == null || views.length == 0)
+            return null;
+
+        return views;
+    }
+
     private static void update(HttpServletRequest request, int item_id, int sequence_id, String countryCode, double chance) {
     	try {
 	    	Context context = UIUtil.obtainContext(request);
@@ -132,8 +148,16 @@ public class EssuirStatistics {
     	try {
 	    	String query = "SELECT * " +
        				"FROM statistics " +
-       				"WHERE item_id=" + item_id + " AND sequence_id=" + sequence_id;
-	        
+       				"WHERE item_id=" + item_id;
+
+            if (sequence_id != 0) {
+                query += " AND sequence_id = " + sequence_id;
+            }
+            /* This code is used for getting information about amount of downloads*/
+            else{
+                query += " AND sequence_id > " + sequence_id;
+            }
+
 	        if (countryCode != null)
 	        	query += " AND country_code='" + countryCode + "'";
 
