@@ -399,7 +399,7 @@
             }
 
 
-            if (repeatable && !readonly && i < defaults.length)
+            if (repeatable && !readonly && i < defaults.length && i % 3 == 0)
             {
                 name.setLength(0);
                 name.append(Utils.addEntities(dpn.getLastName()))
