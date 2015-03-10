@@ -808,8 +808,8 @@ public class ItemTag extends TagSupport
         out.println("<tr class=\"reportOddRow submitFormHelp alert alert-info\" valign=\"top\"><th colspan=\"2\" style=\"text-align: center;\">" +
                     LocaleSupport.getLocalizedMessage(pageContext, "metadata.downloaded") + "</th></tr>");
         String[][] downloads = ua.edu.sumdu.essuir.EssuirStatistics.selectBitstreamByCountries(request, item.getID(), 0);
+        if (downloads != null) {
         List<String[]> tempDownloads = new ArrayList(Arrays.asList(downloads));
-        if (tempDownloads != null) {
             for (int i = 0; i < tempDownloads.size() - 1; i++) {
                 for (int j = i + 1; j < tempDownloads.size(); j++) {
                     if(tempDownloads.get(i)[0].equals(tempDownloads.get(j)[0])){
