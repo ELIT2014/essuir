@@ -876,7 +876,12 @@
     <taglib-uri>http://www.dspace.org/dspace-tags.tld</taglib-uri>
     <taglib-location>/WEB-INF/dspace-tags.tld</taglib-location>
   </taglib>
-  
+
+  <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <trim-directive-whitespaces>true</trim-directive-whitespaces>
+  </jsp-property-group>
+
   </jsp-config>
   
 
