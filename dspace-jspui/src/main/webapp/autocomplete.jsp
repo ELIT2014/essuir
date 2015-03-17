@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %><%@ 
+<%@ page contentType="text/html;charset=UTF-8" trimDirectiveWhitespaces="false"%><%@
     page import="org.dspace.core.Context" %><%@ 
     page import="org.dspace.app.webui.util.UIUtil" %><%@ 
     page import="org.dspace.storage.rdbms.DatabaseManager" %><%@ 
