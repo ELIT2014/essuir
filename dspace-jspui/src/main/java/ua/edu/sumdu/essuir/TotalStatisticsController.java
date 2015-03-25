@@ -27,6 +27,8 @@ public class TotalStatisticsController {
             stat.put("TotalDownloads",sd.getTotalDownloads());
             stat.put("CurrentMonthStatisticsViews",getCurrentMonthStatisticsViews(sd));
             stat.put("CurrentMonthStatisticsDownloads",getCurrentMonthStatisticsDownloads(sd));
+            stat.put("CurrentYearStatisticsViews",getCurrentYearStatisticsViews(sd));
+            stat.put("CurrentYearStatisticsDownloads",getCurrentYearStatisticsDownloads(sd));
         }catch (Exception ex) {
             log.error(ex.getMessage(), ex);
         }
@@ -53,5 +55,23 @@ public class TotalStatisticsController {
         final int janDownloads = 189743;
         final int febDownloads = 393405;
         return totalDownloads - year2011Downloads  - year2012Downloads - year2013Downloads - year2014Downloads - janDownloads - febDownloads;
+    }
+
+    private long getCurrentYearStatisticsViews(StatisticData sd){
+        long totalViews = sd.getTotalViews();
+        final int year2011Views = 237448;
+        final int year2012Views = 750963;
+        final int year2013Views = 1309485;
+        final int year2014Views = 4003814;
+        return totalViews - year2011Views - year2012Views - year2013Views - year2014Views;
+    }
+
+    private long getCurrentYearStatisticsDownloads(StatisticData sd){
+        long totalDownloads = sd.getTotalDownloads();
+        final int year2011Downloads = 322936;
+        final int year2012Downloads = 1198317;
+        final int year2013Downloads = 2638394;
+        final int year2014Downloads = 4641129 ;
+        return totalDownloads - year2011Downloads  - year2012Downloads - year2013Downloads - year2014Downloads;
     }
 }

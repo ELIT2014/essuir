@@ -8,6 +8,8 @@ function show(){
             document.getElementById('TotalDownloads').innerText = data.TotalDownloads;
             document.getElementById('CurrentMonthStatisticsViews').innerText = data.CurrentMonthStatisticsViews;
             document.getElementById('CurrentMonthStatisticsDownloads').innerText = data.CurrentMonthStatisticsDownloads;
+            document.getElementById('CurrentYearStatisticsViews').innerText = data.CurrentYearStatisticsViews;
+            document.getElementById('CurrentYearStatisticsDownloads').innerText = data.CurrentYearStatisticsDownloads;
         }
     });
 }

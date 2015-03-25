@@ -9,8 +9,7 @@
     Locale sessionLocale = UIUtil.getSessionLocale(request);
 
     String locale = sessionLocale.toString();
-    String stats ="<script src=\"http://code.jquery.com/jquery-1.10.2.min.js\" type=\"text/javascript\" ></script>\n" +
-            "<script type=\"text/javascript\" src=\"ajaxStatistics.js\"></script>";
+    String stats ="<script type=\"text/javascript\" src=\"ajaxStatistics.js\"></script>";
     String name = locale.equals("en") ? "stat.html" : "stat_" + locale + ".html";
 
     stats = stats + ConfigurationManager.readNewsFile(name);
