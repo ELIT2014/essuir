@@ -185,10 +185,8 @@ public class EssuirStatistics {
 	
         	    s.close();
 	        } finally {
-	            if (c != null) {
-                    c.commit();
-                    c.close();
-                }
+	            if (c != null) 
+	                c.close();
 	        }
 	
 	        String[][] views = new String[res.size()][2];
@@ -227,10 +225,8 @@ public class EssuirStatistics {
 
 	       	    s.close();
 	        } finally {
-	            if (c != null) {
-                    c.commit();
-                    c.close();
-                }
+	            if (c != null) 
+        	        c.close();
 	        }
 	} catch (Exception ex) {
 		log.error(ex.getMessage(), ex);
@@ -264,10 +260,8 @@ public class EssuirStatistics {
 
 	       	    s.close();
 	        } finally {
-	            if (c != null) {
-                    c.commit();
-                    c.close();
-                }
+	            if (c != null) 
+	                c.close();
 	        }
 	} catch (Exception ex) {
 		log.error(ex.getMessage(), ex);
@@ -309,10 +303,8 @@ public class EssuirStatistics {
         	    sd.setTotalViews(getStatistics(-1));
         	    sd.setTotalDownloads(getStatistics(0));
 	        } finally {
-	            if (c != null) {
-                    c.commit();
-                    c.close();
-                }
+	            if (c != null) 
+	                c.close();
 	        }
 		} catch (Exception ex) {
         	log.error(ex.getMessage(), ex);
@@ -397,13 +389,11 @@ public class EssuirStatistics {
 	            while (resSet.next()) {
 		            sum = resSet.getLong("sum");
         	    }
-
+	
         	    s.close();
 	        } finally {
-	            if (c != null) {
-                    c.commit();
-                    c.close();
-                }
+	            if (c != null) 
+	                c.close();
 	        }
 		} catch (Exception ex) {
         	log.error(ex.getMessage(), ex);
@@ -450,10 +440,8 @@ public class EssuirStatistics {
 	
         	    s.close();
 	        } finally {
-	            if (c != null) {
-                    c.commit();
-                    c.close();
-                }
+	            if (c != null) 
+	                c.close();
 	        }
 		} catch (Exception ex) {
         	log.error(ex.getMessage(), ex);
