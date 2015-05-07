@@ -29,6 +29,7 @@ public class TotalStatisticsController {
             stat.put("CurrentMonthStatisticsDownloads",getCurrentMonthStatisticsDownloads(sd));
             stat.put("CurrentYearStatisticsViews",getCurrentYearStatisticsViews(sd));
             stat.put("CurrentYearStatisticsDownloads",getCurrentYearStatisticsDownloads(sd));
+            context.complete();
         }catch (Exception ex) {
             log.error(ex.getMessage(), ex);
         }
