@@ -40,6 +40,15 @@ CREATE TABLE chair
       ON UPDATE NO ACTION ON DELETE SET NULL
 );
 
+CREATE TABLE general_statistics
+(
+  id serial PRIMARY KEY,
+  year integer,
+  month integer,
+  count_views integer,
+  count_downloads integer
+);
+
 ALTER TABLE eperson ADD COLUMN chair_id integer;
 ALTER TABLE eperson ADD COLUMN position character varying(128);
 
@@ -47,3 +56,4 @@ ALTER TABLE authors OWNER TO dspace;
 ALTER TABLE eperson_service OWNER TO dspace;
 ALTER TABLE faculty OWNER TO dspace;
 ALTER TABLE chair OWNER TO dspace;
+ALTER TABLE general_statistics OWNER TO dspace;

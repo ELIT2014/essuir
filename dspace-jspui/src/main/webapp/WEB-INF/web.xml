@@ -138,11 +138,13 @@
   </listener>
 
   <!-- Load Spring applicationContext -->
-  <listener>
-      <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-  
-  <!-- Servlets -->
+    <!--
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    -->
+
+    <!-- Servlets -->
 
   <servlet>
     <servlet-name>authorize</servlet-name>
@@ -840,17 +842,6 @@
     <servlet-name>request-item</servlet-name>
     <url-pattern>/request-item</url-pattern>
   </servlet-mapping>
-
-    <servlet>
-        <servlet-name>mvc-dispatcher</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>mvc-dispatcher</servlet-name>
-        <url-pattern>/api</url-pattern>
-    </servlet-mapping>
 
     <!-- Icon MIME type -->
   <mime-mapping>
