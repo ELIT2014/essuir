@@ -1,6 +1,6 @@
 function show(){
     $.ajax({
-        url: "/api",
+        url: "/stat/current",
         cache: false,
         success: function(data){
             document.getElementById('TotalCount').innerText = data.TotalCount;
