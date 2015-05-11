@@ -11,10 +11,19 @@ import java.util.List;
 @Service
 public class GeneralStatisticsService {
 
+    private List<YearStatistics> cacheListYearsStatistics;
+
     @Autowired
     private GeneralStatisticsRepository generalStatisticsRepository;
 
     public  List<YearStatistics> getListYearsStatistics(){
+        if(cacheListYearsStatistics == null) {
+            updateListYearsStatistics();
+        }
+        return cacheListYearsStatistics;
+    }
+
+    public void updateListYearsStatistics(){
         List<YearStatistics> listYearsStatistics = new ArrayList<YearStatistics>();
         List<GeneralStatistics> tmpYearsStatistics = (ArrayList<GeneralStatistics>) generalStatisticsRepository.findAllYearsStatistics();
         for (GeneralStatistics entity : tmpYearsStatistics) {
@@ -35,7 +44,7 @@ public class GeneralStatisticsService {
             yearStatistics.setYearDownloads(tmpYearDownloads);
             listYearsStatistics.add(yearStatistics);
         }
-        return listYearsStatistics;
+        cacheListYearsStatistics = listYearsStatistics;
     }
 
 }
