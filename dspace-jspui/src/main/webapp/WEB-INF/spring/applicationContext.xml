@@ -44,11 +44,7 @@
     </bean>
 
     <mvc:annotation-driven />
-    <!--
-    <context:component-scan base-package="ua.edu.sumdu.essuir.service"/>
 
-    <context:component-scan base-package="ua.edu.sumdu.essuir.config"/>
-    -->
     <context:component-scan base-package="ua.edu.sumdu.essuir"/>
     <jpa:repositories base-package="ua.edu.sumdu.essuir.repository" />
 

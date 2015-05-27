@@ -1,22 +1,20 @@
 package ua.edu.sumdu.essuir.entity;
 
-
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
+@IdClass(GeneralStatisticsId.class)
 @Table(name = "general_statistics")
-public class GeneralStatistics {
+public class GeneralStatistics implements Serializable {
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-    @Column(name = "month")
-    private Integer month;
-
     @Column(name = "year")
     private Integer year;
+
+    @Id
+    @Column(name = "month")
+    private Integer month;
 
     @Column(name = "count_views")
     private Integer viewsCount;
@@ -26,12 +24,11 @@ public class GeneralStatistics {
 
     public GeneralStatistics(){}
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public GeneralStatistics(Integer year, Integer month,Integer viewsCount, Integer downloadsCount) {
+        this.year = year;
+        this.month = month;
+        this.viewsCount = viewsCount;
+        this.downloadsCount = downloadsCount;
     }
 
     public Integer getMonth() {

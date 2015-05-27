@@ -42,11 +42,11 @@ CREATE TABLE chair
 
 CREATE TABLE general_statistics
 (
-  id serial PRIMARY KEY,
-  year integer,
-  month integer,
+  year integer NOT NULL,
+  month integer NOT NULL,
   count_views integer,
-  count_downloads integer
+  count_downloads integer,
+  CONSTRAINT general_statistics_pkey PRIMARY KEY (year, month)
 );
 
 ALTER TABLE eperson ADD COLUMN chair_id integer;
