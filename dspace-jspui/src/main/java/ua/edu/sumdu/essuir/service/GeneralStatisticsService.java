@@ -5,8 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.edu.sumdu.essuir.YearStatistics;
 import ua.edu.sumdu.essuir.entity.GeneralStatistics;
 import ua.edu.sumdu.essuir.repository.GeneralStatisticsRepository;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GeneralStatisticsService {
@@ -45,6 +44,41 @@ public class GeneralStatisticsService {
             listYearsStatistics.add(yearStatistics);
         }
         cacheListYearsStatistics = listYearsStatistics;
+    }
+
+
+    public Integer getCurrentMonthStatisticsViews(long totalViews){
+        Integer res = getCurrentYearStatisticsViews(totalViews);
+        ArrayList<Integer> currentYearStatisticsViews = getListYearsStatistics().get(0).getYearViews();
+        for (int i = 0; i < currentYearStatisticsViews.size(); i++) {
+            res -= currentYearStatisticsViews.get(i);
+        }
+        return res;
+    }
+
+    public Integer getCurrentMonthStatisticsDownloads(long totalDownloads){
+        Integer res = getCurrentYearStatisticsDownloads(totalDownloads);
+        ArrayList<Integer> currentYearStatisticsDownloads = getListYearsStatistics().get(0).getYearDownloads();
+        for (int i = 0; i < currentYearStatisticsDownloads.size(); i++) {
+            res -= currentYearStatisticsDownloads.get(i);
+        }
+        return res;
+    }
+
+    public Integer getCurrentYearStatisticsViews(long totalViews){
+        Integer res = Long.valueOf(totalViews).intValue();
+        for (int i = 0; i < getListYearsStatistics().size(); i++) {
+            res -= getListYearsStatistics().get(i).getTotalYearViews();
+        }
+        return res;
+    }
+
+    public Integer getCurrentYearStatisticsDownloads(long totalDownloads){
+        Integer res = Long.valueOf(totalDownloads).intValue();
+        for (int i = 0; i < getListYearsStatistics().size(); i++) {
+            res -= getListYearsStatistics().get(i).getTotalYearDownloads();
+        }
+        return res;
     }
 
 }
