@@ -1,7 +1,7 @@
 package ua.edu.sumdu.essuir.config;
 
 import org.dspace.core.ConfigurationManager;
-import org.hibernate.ejb.HibernatePersistence;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -23,10 +23,10 @@ import java.util.Properties;
 @EnableJpaRepositories("ua.edu.sumdu.essuir.repository")
 public class DataConfig {
 
-    private static final String PROP_DATABASE_DRIVER = ConfigurationManager.getProperty("db","driver");
-    private static final String PROP_DATABASE_PASSWORD = ConfigurationManager.getProperty("db","password");
-    private static final String PROP_DATABASE_URL = ConfigurationManager.getProperty("db","url");
-    private static final String PROP_DATABASE_USERNAME = ConfigurationManager.getProperty("db","username");
+    private static final String PROP_DATABASE_DRIVER = ConfigurationManager.getProperty("db.driver");
+    private static final String PROP_DATABASE_PASSWORD = ConfigurationManager.getProperty("db.password");
+    private static final String PROP_DATABASE_URL = ConfigurationManager.getProperty("db.url");
+    private static final String PROP_DATABASE_USERNAME = ConfigurationManager.getProperty("db.username");
     private static final String PROP_HIBERNATE_DIALECT = ConfigurationManager.getProperty("db.hibernate.dialect");
     private static final String PROP_HIBERNATE_SHOW_SQL = ConfigurationManager.getProperty("db.hibernate.show_sql");
     private static final String PROP_ENTITYMANAGER_PACKAGES_TO_SCAN = ConfigurationManager.getProperty("db.entitymanager.packages.to.scan");
@@ -48,7 +48,7 @@ public class DataConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());
-        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistence.class);
+        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         entityManagerFactoryBean.setPackagesToScan(PROP_ENTITYMANAGER_PACKAGES_TO_SCAN);
 
         entityManagerFactoryBean.setJpaProperties(getHibernateProperties());
