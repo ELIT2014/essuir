@@ -179,8 +179,7 @@
 	<h2>
 		<fmt:message key="browse.full.header">
 			<fmt:param value="<%= scope %>"/>
-		</fmt:message>&nbsp;<fmt:message key="<%= typeKey %>"/>
-		<%= value %>
+		</fmt:message>&nbsp;<fmt:message key="<%= typeKey %>"/>&nbsp;<%= value %>
 	</h2>
 
 	<%-- Include the main navigation for all the browse pages --%>
