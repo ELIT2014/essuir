@@ -41,27 +41,27 @@ public class CollectionItemList implements CollectionHomeProcessor
     private static final int etal    = ConfigurationManager.getIntProperty("webui.browse.author-limit", -1);
     // the number of items to display per page
     private static final int perpage = ConfigurationManager.getIntProperty("webui.collectionhome.perpage", 20);
-    // whether does use "dateaccessioned" as a sort option
-    //   If true and the sort option "dateaccessioned" exists, use "dateaccessioned" as a sort option.
+    // whether does use "dateissued" as a sort option
+    //   If true and the sort option "dateissued" exists, use "dateissued" as a sort option.
     //   Otherwise use the sort option pertaining the specified browse index
-    private static boolean useDateaccessioned = ConfigurationManager.getBooleanProperty("webui.collectionhome.use.dateaccessioned", true);
-    // the number of sort option "dateaccessioned"
+    private static boolean useDateissued = ConfigurationManager.getBooleanProperty("webui.collectionhome.use.dateissued", true);
+    // the number of sort option "dateissued"
     private static int number = -1;
 
     static
     {
         if (name == null)
         {
-            name = "title";
+            name = "dateissued";
         }
         
-        if (useDateaccessioned)
+        if (useDateissued)
         {
             try
             {
                 for (SortOption option : SortOption.getSortOptions())
                 {
-                    if ("dateaccessioned".equals(option.getName()))
+                    if ("dateissued".equals(option.getName()))
                     {
                         number = option.getNumber();
                         break;
