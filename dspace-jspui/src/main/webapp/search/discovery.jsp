@@ -249,7 +249,7 @@
                 {
                     boolean found = false;
             %>
-            <select id="filter_field_<%=idx %>" name="filter_field_<%=idx %>" disabled>
+            <select id="filter_field_<%=idx %>" name="filter_field_<%=idx %>_select" disabled>
                 <%
                     for (DiscoverySearchFilter searchFilter : availableFilters)
                     {
@@ -269,7 +269,10 @@
                 }
             %>
             </select>
-            <select id="filter_type_<%=idx %>" name="filter_type_<%=idx %>" disabled>
+            <input type="hidden" value="<%= filter[0] %>" name="filter_field_<%=idx %>" />
+            <input type="hidden" value="<%= filter[1] %>" name="filter_type_<%=idx %>" />
+
+            <select id="filter_type_<%=idx %>" name="filter_type_<%=idx %>_select" disabled>
                 <%
                     for (String opt : options)
                     {
