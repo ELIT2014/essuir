@@ -59,14 +59,7 @@ public class CollectionItemList implements CollectionHomeProcessor
         {
             try
             {
-                for (SortOption option : SortOption.getSortOptions())
-                {
-                    if ("dateissued".equals(option.getName()))
-                    {
-                        number = option.getNumber();
-                        break;
-                    }
-                }
+                number = SortOption.getSortOptionNumber("dateissued");
             }
             catch (SortException e)
             {
