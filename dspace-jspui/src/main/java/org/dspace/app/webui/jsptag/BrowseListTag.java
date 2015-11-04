@@ -22,6 +22,7 @@ import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.core.Utils;
+import org.dspace.sort.SortException;
 import org.dspace.storage.bitstore.BitstreamStorageManager;
 import org.dspace.sort.SortOption;
 
@@ -580,8 +581,9 @@ public class BrowseListTag extends TagSupport
                             		{
                             			argument = "vfocus";
                             		}
-                                    // Special sorting type by date DESC
-                                    String sortParameters = "&amp;"+"sort_by=2"+"&amp;"+"order=DESC";
+                                    // Special sorting type by date issued DESC
+
+                                    String sortParameters = "&amp;"+"sort_by=" + Integer.toString(SortOption.getSortOptionNumber("dateissued")) + "&amp;"+"order=DESC";
                                     startLink = "<a href=\"" + hrq.getContextPath() + "/browse?type=" + browseType[colIdx] + sortParameters +"&amp;" +
                                         argument + "=" + URLEncoder.encode(value,"UTF-8");
 
@@ -703,6 +705,10 @@ public class BrowseListTag extends TagSupport
         catch (BrowseException e)
         {
         	throw new JspException(e);
+        }
+        catch (SortException e)
+        {
+            throw new JspException(e);
         }
 
         return SKIP_BODY;

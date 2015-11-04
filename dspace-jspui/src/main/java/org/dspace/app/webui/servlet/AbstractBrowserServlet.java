@@ -96,12 +96,12 @@ public abstract class AbstractBrowserServlet extends DSpaceServlet
             int etAl = UIUtil.getIntParameter(request, "etal");
 
             // Sort authors by issue date by default
-/*            String submitBrowse = request.getParameter("submit_browse");
-            if (type != null && type.equals("author") && value != null && !value.equals("") && (submitBrowse == null || submitBrowse.equals(""))) {
+            //String submitBrowse = request.getParameter("submit_browse");
+            if (type != null && type.equals("author") && value != null && !value.equals("") && sortBy == -1) {
                 sortBy = SortOption.getSortOptionNumber("dateissued");
                 order = "DESC";
             }
-*/
+
             // get the community or collection location for the browse request
             // Note that we are only interested in getting the "smallest" container,
             // so if we find a collection, we don't bother looking up the community
