@@ -96,9 +96,9 @@ public abstract class AbstractBrowserServlet extends DSpaceServlet
             int etAl = UIUtil.getIntParameter(request, "etal");
 
             // Sort authors by issue date by default
-            String submitBrowse = request.getParameter("submit_browse");
-            if (type != null && type.equals("author") && value != null && !value.equals("") && (submitBrowse == null || submitBrowse.equals(""))) {
-                sortBy = 2;
+            //String submitBrowse = request.getParameter("submit_browse");
+            if (type != null && type.equals("author") && value != null && !value.equals("") && sortBy == -1) {
+                sortBy = SortOption.getSortOptionNumber("dateissued");
                 order = "DESC";
             }
 
