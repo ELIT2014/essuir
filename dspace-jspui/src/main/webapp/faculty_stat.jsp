@@ -4,13 +4,13 @@
 
 <%@ taglib uri="http://www.dspace.org/dspace-tags.tld" prefix="dspace" %>
 
-<%@ page import="org.dspace.core.Context" %>
 <%@ page import="org.dspace.app.webui.util.UIUtil" %>
 <%@ page import="org.dspace.storage.rdbms.DatabaseManager" %>
-<%@ page import="org.dspace.storage.rdbms.TableRowIterator" %>
 <%@ page import="org.dspace.storage.rdbms.TableRow" %>
 <%@ page import="org.dspace.eperson.EPerson" %>
 <%@ page import="java.sql.SQLException" %>
+<%@ page import="org.dspace.storage.rdbms.TableRowIterator" %>
+<%@ page import="com.sun.javafx.binding.StringFormatter" %>
 
 <% org.dspace.core.Context context = org.dspace.app.webui.util.UIUtil.obtainContext(request); 
    EPerson user = (EPerson) request.getAttribute("dspace.current.user");
@@ -127,19 +127,16 @@
           int chair_id;
           String chair_name = null;
           try {
-              tri = DatabaseManager.query(context, "    SELECT chair.chair_id, chair_name, lastname, firstname, count_docs submits " +
-                                                   "      FROM eperson " +
-                                                   "      LEFT JOIN (SELECT submitter_id, COUNT(*) count_docs " +
-                                                   "          FROM item " +
-                                                   "          WHERE in_archive = TRUE " +
-                                                   "            AND last_modified BETWEEN DATE '" + yearFrom + "-" + monthFrom + "-" + dayFrom + "' " +
-                                                   "                                  AND DATE '" + yearTo + "-" + monthTo + "-" + dayTo + "' " +
-                                                   "          GROUP BY submitter_id) a " +
-                                                   "        ON eperson_id = submitter_id " +
-                                                   "      RIGHT JOIN chair ON eperson.chair_id = chair.chair_id " +
-                                                   "      WHERE faculty_id = " + faculty + "" +
-                                                   "      ORDER BY chair.chair_id, lastname, firstname ");
-
+              String query = "select faculty_id, chair.chair_id, lastname, firstname, chair_name, submits from chair " +
+                      "right join " +
+                      "(select eperson.*, count(metadatavalue.item_id) as submits " +
+                      "from eperson " +
+                      "left join chair on chair.chair_id = eperson.chair_id " +
+                      "right join item on item.submitter_id = eperson_id and in_archive " +
+                      "right join metadatavalue on metadatavalue.item_id = item.item_id and metadata_field_id = 11 and text_value between '" + StringFormatter.format("%d-%02d-%02d", yearFrom, monthFrom, dayFrom).getValue() + "' and '" + StringFormatter.format("%d-%02d-%02d", yearTo, monthTo, dayTo).getValue() + "' " +
+                      "group by eperson_id) person on person.chair_id = chair.chair_id  where faculty_id = " + faculty + " ORDER BY chair.chair_id, lastname, firstname  ";
+              tri = DatabaseManager.query(context, query);
+              System.out.println(query);
               summ = 0;
               chair_id = 0;
               sb.setLength(0);
@@ -195,21 +192,14 @@
         } else {
           int faculty_id;
           try {
-              tri = DatabaseManager.query(context, "SELECT faculty_id, chair_name, submits " +
-                                                   "  FROM chair " +
-                                                   "  LEFT JOIN (SELECT chair_id, SUM(count_docs) submits " +
-                                                   "      FROM eperson " +
-                                                   "      RIGHT JOIN (SELECT submitter_id, COUNT(*) count_docs  " +
-                                                   "          FROM item " +
-                                                   "          WHERE in_archive = TRUE " +
-                                                   "            AND last_modified BETWEEN DATE '" + yearFrom + "-" + monthFrom + "-" + dayFrom + "' " +
-                                                   "                                  AND DATE '" + yearTo + "-" + monthTo + "-" + dayTo + "' " +
-                                                   "          GROUP BY submitter_id) a " +
-                                                   "        ON eperson_id = submitter_id " +
-                                                   "    GROUP BY chair_id) b " +
-                                                   "  ON chair.chair_id = b.chair_id " +
-                                                   "  ORDER BY faculty_id, chair.chair_id ");
-
+              tri = DatabaseManager.query(context, "select faculty_id, chair.chair_id, chair_name, count(*) as submits " +
+                      "from chair " +
+                      "left join eperson on eperson.chair_id = chair.chair_id " +
+                      "left join item on item.submitter_id = eperson_id " +
+                      "left join metadatavalue on metadatavalue.item_id = item.item_id " +
+                      "where in_archive and metadata_field_id = 11 and text_value between '" + StringFormatter.format("%d-%02d-%02d", yearFrom, monthFrom, dayFrom).getValue() + "' and '" + StringFormatter.format("%d-%02d-%02d", yearTo, monthTo, dayTo).getValue() + "' " +
+                      "group by faculty_id, chair.chair_id, chair_name ORDER BY faculty_id, chair.chair_id"
+              );
               summ = 0;
               faculty_id = 0;
               sb.setLength(0);
