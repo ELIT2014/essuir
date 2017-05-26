@@ -10,7 +10,6 @@
 <%@ page import="org.dspace.eperson.EPerson" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="org.dspace.storage.rdbms.TableRowIterator" %>
-<%@ page import="com.sun.javafx.binding.StringFormatter" %>
 
 <% org.dspace.core.Context context = org.dspace.app.webui.util.UIUtil.obtainContext(request); 
    EPerson user = (EPerson) request.getAttribute("dspace.current.user");
@@ -133,10 +132,9 @@
                       "from eperson " +
                       "left join chair on chair.chair_id = eperson.chair_id " +
                       "right join item on item.submitter_id = eperson_id and in_archive " +
-                      "right join metadatavalue on metadatavalue.item_id = item.item_id and metadata_field_id = 11 and text_value between '" + StringFormatter.format("%d-%02d-%02d", yearFrom, monthFrom, dayFrom).getValue() + "' and '" + StringFormatter.format("%d-%02d-%02d", yearTo, monthTo, dayTo).getValue() + "' " +
+                      "right join metadatavalue on metadatavalue.item_id = item.item_id and metadata_field_id = 11 and text_value between '" + String.format("%d-%02d-%02d", yearFrom, monthFrom, dayFrom) + "' and '" + String.format("%d-%02d-%02d", yearTo, monthTo, dayTo) + "' " +
                       "group by eperson_id) person on person.chair_id = chair.chair_id  where faculty_id = " + faculty + " ORDER BY chair.chair_id, lastname, firstname  ";
               tri = DatabaseManager.query(context, query);
-              System.out.println(query);
               summ = 0;
               chair_id = 0;
               sb.setLength(0);
@@ -197,7 +195,7 @@
                       "left join eperson on eperson.chair_id = chair.chair_id " +
                       "left join item on item.submitter_id = eperson_id " +
                       "left join metadatavalue on metadatavalue.item_id = item.item_id " +
-                      "where in_archive and metadata_field_id = 11 and text_value between '" + StringFormatter.format("%d-%02d-%02d", yearFrom, monthFrom, dayFrom).getValue() + "' and '" + StringFormatter.format("%d-%02d-%02d", yearTo, monthTo, dayTo).getValue() + "' " +
+                      "where in_archive and metadata_field_id = 11 and text_value between '" + String.format("%d-%02d-%02d", yearFrom, monthFrom, dayFrom) + "' and '" + String.format("%d-%02d-%02d", yearTo, monthTo, dayTo) + "' " +
                       "group by faculty_id, chair.chair_id, chair_name ORDER BY faculty_id, chair.chair_id"
               );
               summ = 0;
