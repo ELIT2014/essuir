@@ -10,8 +10,10 @@ import ua.edu.sumdu.essuir.StatisticData;
 import ua.edu.sumdu.essuir.YearStatistics;
 import ua.edu.sumdu.essuir.entity.GeneralStatistics;
 import ua.edu.sumdu.essuir.repository.GeneralStatisticsRepository;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ivan on 13.05.2015.
@@ -26,9 +28,39 @@ public class ScheduledTasks {
     @Autowired
     private GeneralStatisticsRepository generalStatisticsRepository;
 
+    private Boolean isPreviousMonthStatistics(DateTime now, GeneralStatistics monthStatistics) {
+        int previousMonth = now.getMonthOfYear() - 1;
+        int previousYear = now.getYear();
+        if (now.getMonthOfYear() == 1) {
+            previousMonth = 12;
+            previousYear = now.getYear() - 1;
+        }
+
+        return (monthStatistics.getMonth().equals(previousMonth) && monthStatistics.getYear().equals(previousYear));
+    }
+
+    private Boolean isPreviousMonthStatisticsSavedToDatabase() {
+        DateTime today = DateTime.now();
+        List<GeneralStatistics> statistics = generalStatisticsRepository.findAll();
+        for (GeneralStatistics monthStatistics : statistics) {
+            if(isPreviousMonthStatistics(today, monthStatistics)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean finalizeMonthStatistics() {
+        if (!isPreviousMonthStatisticsSavedToDatabase()) {
+            addNewEntityByMonth();
+            return true;
+        }
+        return false;
+    }
+
     // Fire at 00:00 on the first day of every month
     @Scheduled(cron = "0 0 0 1 * ?")
-    public void addNewEntityByMonth(){
+    public void addNewEntityByMonth() {
         DateTime dateTime = DateTime.now();
         //System.out.println("start schedule");
         //System.out.println(dateTime.toString());
@@ -36,15 +68,14 @@ public class ScheduledTasks {
         try {
             Context context = new Context();
             sd = EssuirStatistics.getTotalStatistic(context);
-            if(dateTime.getMonthOfYear() != 1){
+            if (dateTime.getMonthOfYear() != 1) {
                 GeneralStatistics newMonth = new GeneralStatistics(dateTime.getYear(),
                         dateTime.getMonthOfYear() - 1,
                         generalStatisticsService.getCurrentMonthStatisticsViews(sd.getTotalViews()),
                         generalStatisticsService.getCurrentMonthStatisticsDownloads(sd.getTotalDownloads()));
                 generalStatisticsRepository.save(newMonth);
                 //System.out.println("saved new month");
-            }
-            else {
+            } else {
                 GeneralStatistics newMonth = new GeneralStatistics(dateTime.getYear() - 1,
                         11,
                         generalStatisticsService.getCurrentMonthStatisticsViews(sd.getTotalViews()),
@@ -72,7 +103,7 @@ public class ScheduledTasks {
             generalStatisticsService.updateListYearsStatistics();
             context.complete();
             //System.out.println("That's OK");
-        } catch (SQLException e){
+        } catch (SQLException e) {
             log.error(e.getMessage(), e);
             e.printStackTrace();
         }
