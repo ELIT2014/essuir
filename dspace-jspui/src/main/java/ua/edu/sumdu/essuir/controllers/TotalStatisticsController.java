@@ -17,6 +17,7 @@ import ua.edu.sumdu.essuir.EssuirStatistics;
 import ua.edu.sumdu.essuir.YearStatistics;
 import ua.edu.sumdu.essuir.service.GeneralStatisticsService;
 import ua.edu.sumdu.essuir.StatisticData;
+import ua.edu.sumdu.essuir.service.ScheduledTasks;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +29,9 @@ public class TotalStatisticsController {
 
     @Autowired
     private GeneralStatisticsService generalStatisticsService;
+
+    @Autowired
+    private ScheduledTasks scheduledTasks;
 
     private static Logger log = Logger.getLogger(TotalStatisticsController.class);
 
@@ -57,5 +61,15 @@ public class TotalStatisticsController {
     public String getGeneralStatistics(ModelMap model){
         model.addAttribute("listYearStatistics", generalStatisticsService.getListYearsStatistics());
         return "pub_stat";
+    }
+
+    @RequestMapping(value = "/update-month-statistics", method = RequestMethod.GET)
+    @ResponseBody
+    public String updateStatistics() {
+        if(scheduledTasks.finalizeMonthStatistics()) {
+            return "Statistics updated successfully";
+        } else {
+            return "Errors occurred";
+        }
     }
 }
