@@ -53,7 +53,6 @@
         <th bgcolor="lightsteelblue">Initials UK</th>
         <th bgcolor="lightsteelblue">Surname RU</th>
         <th bgcolor="lightsteelblue">Initials RU</th>
-        <th bgcolor="lightsteelblue">ORCID</th>
         <th bgcolor="lightsteelblue">Action</th>
     </tr>
   
@@ -80,9 +79,7 @@
                 %><tr><td bgcolor="lightblue"><%=row.getStringColumn("surname_en") + "</td><td bgcolor=\"lightblue\">" + row.getStringColumn("initials_en") + "</td>" %><%
                 %><td><%=row.getStringColumn("surname_uk") + "</td><td>" + row.getStringColumn("initials_uk") + "</td>" %><%
                 %><td><%=row.getStringColumn("surname_ru") + "</td><td>" + row.getStringColumn("initials_ru") %>
-                </td>
-                <td><%= row.getStringColumn("orcid")%></td>
-                <td bgcolor="white" align="center"><a href="authors_edit.jsp<%=link%>">Edit</a><br/><a href="authors_remove.jsp<%=link%>">Delete</a></td></tr>
+                </td><td bgcolor="white" align="center"><a href="authors_edit.jsp<%=link%>">Edit</a><br/><a href="authors_remove.jsp<%=link%>">Delete</a></td></tr>
 <%
             }
         } finally {
