@@ -43,7 +43,6 @@ import org.dspace.core.I18nUtil;
 import org.dspace.core.PluginManager;
 import org.dspace.core.Utils;
 import org.dspace.handle.HandleManager;
-import ua.edu.sumdu.essuir.cache.AuthorCache;
 
 /**
  * <P>
@@ -610,20 +609,13 @@ public class ItemTag extends TagSupport
 	                        }
                             // add sorting by date DESC type for author category
                             String sortParameters = "";
-	                        String orcid = "";
                             if (browseIndex.equals("author")){
-                                orcid = AuthorCache.getOrcid(value);
-                                if(orcid != null) {
-                                    orcid = String.format("&nbsp;<a href = \"%s\"><img src = \"/image/orcid.gif\" width=\"16px\"></a>", orcid.replaceAll("[{}]", ""));
-                                } else {
-                                    orcid = "";
-                                }
                                 sortParameters = "&amp;"+"sort_by=2"+"&amp;"+"order=DESC";
                             }
 	                    	out.print("<a class=\"" + ("authority".equals(argument)?"authority ":"") + browseIndex + "\""
 	                                                + "href=\"" + request.getContextPath() + "/browse?type=" + browseIndex + sortParameters + "&amp;" + argument + "="
 	                    				+ URLEncoder.encode(value, "UTF-8") + "\">" + Utils.addEntities(values[j].value)
-	                    				+ "</a>" + orcid);
+	                    				+ "</a>");
 	                    }
                         else
                         {
