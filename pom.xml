@@ -720,7 +720,7 @@
           <dependency>
               <artifactId>spring-data-jpa</artifactId>
               <groupId>org.springframework.data</groupId>
-              <version>1.8.0.RELEASE</version>
+              <version>1.11.23.RELEASE</version>
           </dependency>
 
           <dependency>
